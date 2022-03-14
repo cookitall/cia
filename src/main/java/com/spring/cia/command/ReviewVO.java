@@ -1,5 +1,29 @@
 package com.spring.cia.command;
+/*
+CREATE TABLE cia_review
+(
+	review_num number NOT NULL,
+	user_id varchar2(50) NOT NULL,
+	order_num number NOT NULL,
+	menu_name varchar2(50) NOT NULL,
+	shop_name varchar2(50) NOT NULL,
+	review_content varchar2(200) NOT NULL,
+	review_star number NOT NULL,
+	review_date date DEFAULT sysdate NOT NULL,
+	PRIMARY KEY (review_num)
+);
+CREATE SEQUENCE review_seq
 
+    START WITH 1
+
+    INCREMENT BY 1
+
+    MAXVALUE 1000
+
+    NOCYCLE
+
+    NOCACHE;
+*/
 import java.sql.Timestamp;
 
 import lombok.Getter;
