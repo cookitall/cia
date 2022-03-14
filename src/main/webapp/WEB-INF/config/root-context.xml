@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- Root Context: defines shared resources visible to all other web components -->
+
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location"
+			value="classpath:/db-config/Hikari.properties" />
+	</bean>
+
+	<!-- 히카리 커넥션 DB 설정 -->
+	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+		<property name="driverClassName"
+			value="${ds.driverClassName}" />
+		<property name="jdbcUrl" value="${ds.url}" />
+		<property name="username" value="${ds.username}" />
+		<property name="password" value="${ds.password}" />
+	</bean>
+
+	<!-- 위에 설정한 DB정보를 데이터소스 객체에 주입 -->
+	<bean id="ds" class="com.zaxxer.hikari.HikariDataSource">
+		<constructor-arg ref="hikariConfig" />
+	</bean>
+
+	<!-- 마이바티스 연결 객체 생성. -->
+	<bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="ds" />
+
+		<!-- mapper.xml의 경로. -->
+		<property name="mapperLocations"
+			value="classpath:/mappers/*.xml" />
+	</bean>
+
+	<!-- 위의 구현체 xml을 빈으로 등록하기 위해 타입이 필요 인터페이스를 스캔해서 빈으로 등록하기 위한 설정. -->
+	<!-- 
+	<mybatis-spring:scan
+		base-package="com.spring.cia.ceoInfo.mapper" />
+	<mybatis-spring:scan
+		base-package="com.spring.cia.ceoMenu.mapper" />
+	<mybatis-spring:scan
+		base-package="com.spring.cia.shop.mapper" />
+	<mybatis-spring:scan
+		base-package="com.spring.cia.userInfo.mapper" />
+	<mybatis-spring:scan
+		base-package="com.spring.cia.userMenu.mapper" />
+    -->
+
+
+
+
+
+
+</beans>
