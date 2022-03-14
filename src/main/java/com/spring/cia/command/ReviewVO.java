@@ -10,7 +10,8 @@ import lombok.ToString;
 @Setter
 @ToString
 public class ReviewVO {
-
+	String del = "del";
+	
 	private int reviewNum;
 	private String userId;
 	private int orderNum;

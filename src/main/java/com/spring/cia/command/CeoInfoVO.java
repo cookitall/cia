@@ -8,6 +8,8 @@ import lombok.ToString;
 @Setter
 @ToString
 public class CeoInfoVO {
+	String del = "del";
+	
  private String ceoId;
  private String ceoEmail;
  private String ceoPw;

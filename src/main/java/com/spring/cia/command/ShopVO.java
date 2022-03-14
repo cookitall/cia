@@ -8,6 +8,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class ShopVO {
+	String del = "del";
 	
 	private String shopName;
 	private String shopCategory;
