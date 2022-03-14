@@ -10,7 +10,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class ReplyVO {
-	String del = "del";
+	
 	
 	private int replyNum;
 	private int reviewNum;

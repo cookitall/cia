@@ -15,6 +15,5 @@ public class CeoInfoController {
 	@GetMapping("ceoLogin") 
 	public void ceoLogin () {
 		System.out.println("ceoLogin 요청");
-		String del = "del";
 	}
 }

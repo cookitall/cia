@@ -8,7 +8,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class UserlikeVO {
-	String del = "del";
+	
 	
 	private int likeNum;
 	private String userId;

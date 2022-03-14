@@ -10,7 +10,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class DeliveryVO {
-	String del = "del";
+	
 	
 	
 	private int orderNum;

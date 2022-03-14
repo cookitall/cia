@@ -10,7 +10,6 @@ import lombok.ToString;
 @Setter
 @ToString
 public class OrderVO {
-	String del = "del";
 	
 	private int orderNum;
 	private Timestamp orderDate;

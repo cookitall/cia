@@ -8,7 +8,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class OrderDetailVO {
-	String del = "del";
+	
 	
 	private int orderNum;
 	private String menuName;
