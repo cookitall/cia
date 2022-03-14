@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.spring.cia.ceoInfo.mapper.ICeoInfoMapper">
+  
+  <resultMap type="com.spring.cia.command.CeoInfoVO" id="ceoInfo">
+  	<id property="ceoId" column="ceo_id"/>
+  	<result property="ceoEmail" column="ceo_email" />
+  	<result property="ceoPw" column="ceo_pw" />
+  	<result property="ceoName" column="ceo_name" />
+  	<result property="ceoPhone" column="ceo_phone" />
+  	<result property="shopName" column="shop_name" />
+  	<result property="ceoRegDate" column="ceo_regdate"/>
+  </resultMap>
+  
+  
+  <select id="ceoIdChk" resultType="int">
+  	SELECT COUNT(*) 
+  	FROM cia_ceo_info
+  	WHERE ceo_id = #{ceoId}
+  </select>
+  
+  <insert id="ceoJoin">
+  	INSERT INTO cia_ceo_info
+  	(ceo_id, ceo_email, ceo_pw, ceo_name, ceo_phone, shop_name)
+  	VALUES(#{ceoId}, #{ceoEmail}, #{ceoPw}, #{ceoName}, #{ceoPhone}, #{shopName})
+  </insert>
+  
+  
+  </mapper>
+  
