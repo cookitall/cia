@@ -13,8 +13,17 @@
   	<result property="ceoPhone" column="ceo_phone" />
   	<result property="shopName" column="shop_name" />
   	<result property="ceoRegDate" column="ceo_regdate"/>
+  	<collection property="shop" resultMap="shopVO"/>
   </resultMap>
   
+  <resultMap type="com.spring.cia.command.ShopVO" id="shopVO">
+  	<id property="shopName" column="shop_name"/>
+  	<result property="shopCategory" column="shop_category"/>
+  	<result property="shopInfo" column="shop_info"/>
+  	<result property="shopNum" column="shop_num"/>
+  	<result property="shopAddr1" column="shop_addr1"/>
+  	<result property="shopAddr2" column="shop_addr2"/>
+  </resultMap>
   
   <select id="ceoIdChk" resultType="int">
   	SELECT COUNT(*) 
@@ -22,11 +31,63 @@
   	WHERE ceo_id = #{ceoId}
   </select>
   
+  <insert id="shopJoin">
+  	INSERT INTO cia_shop
+  	(shop_name, shop_category, shop_num, shop_addr1, shop_addr2)
+  	VALUES(#{shopName}, #{shopCategory}, #{shopNum}, #{shopAddr1}, #{shopAddr2})
+  </insert>
   <insert id="ceoJoin">
   	INSERT INTO cia_ceo_info
   	(ceo_id, ceo_email, ceo_pw, ceo_name, ceo_phone, shop_name)
   	VALUES(#{ceoId}, #{ceoEmail}, #{ceoPw}, #{ceoName}, #{ceoPhone}, #{shopName})
   </insert>
+  
+  <select id="ceoLogin" resultType="com.spring.cia.command.CeoInfoVO">
+  	SELECT * FROM cia_ceo_info
+  	WHERE ceo_id = #{ceoId}
+  	AND ceo_pw = #{ceoPw}
+  </select>
+  
+  <select id="ceoPwChk" resultType="String">
+  	SELECT ceoPw
+  	FROM cia_ceo_info
+  	WHERE ceo_id = #{ceoId}
+  </select>
+  
+  <select id="ceoInfoGet" resultMap="ceoInfo">
+  	SELECT ceo_id,
+  		   ceo_email,
+  		   ceo_name,
+  		   ceo_phone,
+  		   shop_name,
+  		   s.shop_categoty,
+  		   s.shop_num,
+  		   s.shop_info,
+  		   s.shop_addr1,
+  		   s.shop_addr2
+  	FROM cia_ceo_info c LEFT JOIN cia_shop s
+  	ON c.shop_name = s.shop_name
+  	WHERE c.ceo_id = #{ceoId}
+  </select>
+  
+  <update id="ceoModify">
+  	UPDATE cia_ceo_info
+  	SET ceo_mail = #{ceoMail}, ceo_name = #{ceoName}, ceo_pw = #{ceoPw},
+  		ceo_phone = #{ceoPhone}
+  	WHERE ceo_id = #{ceoId}
+  </update>
+  <update id="shopModify">
+  	UPDATE cia_shop
+  	SET shop_categoey = #{shopCategort},
+  		shop_num = #{shopNum}, shop_info = #{shopInfo},
+  		shop_addr1 = #{shopAddr1}, shop_addr2 = #{shopAddr2}
+  	WHERE shop_name = #{shopName}
+  </update>
+  
+  <delete id="ceoDelete">
+  	DELETE FROM cia_ceo_info
+  	WHERE ceo_id = #{ceoId}
+  </delete>
   
   
   </mapper>

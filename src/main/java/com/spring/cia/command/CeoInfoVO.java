@@ -35,4 +35,6 @@ public class CeoInfoVO {
  private String ceoPhone;
  private String shopName;
  private Timestamp ceoRegDate;
+ 
+ private ShopVO shop;
 }

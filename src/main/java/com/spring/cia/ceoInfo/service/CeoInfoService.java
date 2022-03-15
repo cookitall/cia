@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.spring.cia.ceoInfo.mapper.ICeoInfoMapper;
 import com.spring.cia.command.CeoInfoVO;
+import com.spring.cia.command.ShopVO;
 
 @Service
 public class CeoInfoService implements ICeoInfoService {
@@ -20,6 +21,7 @@ public class CeoInfoService implements ICeoInfoService {
 	@Override
 	public void ceoJoin(CeoInfoVO vo) {
 		mapper.ceoJoin(vo);
+		mapper.shopJoin(vo.getShop());
 	}
 
 	@Override
@@ -28,8 +30,24 @@ public class CeoInfoService implements ICeoInfoService {
 	}
 
 	@Override
+	public String ceoPwChk(String ceoId) {
+		return mapper.ceoPwChk(ceoId);
+	}
+	
+	@Override
 	public void ceoModify(CeoInfoVO vo) {
 		mapper.ceoModify(vo);
+		mapper.shopModify(vo.getShop());
+	}
+
+	@Override
+	public CeoInfoVO ceoInfoGet(String ceoId) {
+		return mapper.ceoInfoGet(ceoId);
+	}
+
+	@Override
+	public void ceoDelete(String CeoId) {
+		mapper.ceoDelete(CeoId);
 	}
 
 }

@@ -37,7 +37,11 @@
 				</div>
 
 				<label for="ceo-pw">현재 비밀번호</label> 
-				<input type="password" name="ceo-pw" id="ceo-pw" placeholder="비밀번호 입력" required /> 
+				<div class="id-wrap">
+					<input type="password" name="ceo-pw" id="ceo-pw" placeholder="비밀번호 입력" required />
+					<button class="mail-check" type="button" id="pwChk">확인</button> 
+					<span id="emailError" class="error hidden">* 오류</span>
+				</div>
 				
 				<label for="ceo-pw">신규 비밀번호</label> 
 				<input type="password" name="ceoNewPw" id="ceo-pw" placeholder="비밀번호 입력" required /> 
