@@ -16,7 +16,7 @@
 </head>
 
 <body>
-
+<script src="<c:url value='/js/jquery-3.6.0.min.js'/>"></script>
 <header>
     <div class="logo">
         <a href="<c:url value='/' />"><i class="logo-img" style="background-image: url(<c:url value='/img/logo.png'/>)"></i></a>
@@ -25,8 +25,19 @@
         <input class="btn-search" type="search" placeholder="메뉴을 검색해 보세요">
         <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">
     </div>
+    
     <div class="headLogin">
-        <button type="button" class="btn-login" onclick="<c:url value='/ceoInfo/ceoLogin' />">로그인</button>
+    	<c:choose>
+    		<c:when test="${ceoLogin != null}">
+        		<li><a href="<c:url value='/ceoInfo/ceoModify' />"><span class="btn-login">사업자 정보</span></a></li>
+        	</c:when>
+        	<c:when test="${userLogin != null}">
+        		<li><a href="<c:url value='/userInfo/moodify' />"><span class="btn-login" >내 정보</span></a></li>
+        	</c:when>
+        	<c:otherwise>
+        		<li><a href="<c:url value='/userInfo/login' />"><span class="btn-login">로그인</span></a></li>
+        	</c:otherwise>
+        </c:choose>
     </div>
 </header>
 

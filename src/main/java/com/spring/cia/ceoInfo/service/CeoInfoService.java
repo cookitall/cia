@@ -19,9 +19,9 @@ public class CeoInfoService implements ICeoInfoService {
 	}
 
 	@Override
-	public void ceoJoin(CeoInfoVO vo) {
+	public void ceoJoin(CeoInfoVO vo, ShopVO shop) {
 		mapper.ceoJoin(vo);
-		mapper.shopJoin(vo.getShop());
+		mapper.shopJoin(shop);
 	}
 
 	@Override
@@ -35,9 +35,9 @@ public class CeoInfoService implements ICeoInfoService {
 	}
 	
 	@Override
-	public void ceoModify(CeoInfoVO vo) {
+	public void ceoModify(CeoInfoVO vo, ShopVO shop) {
 		mapper.ceoModify(vo);
-		mapper.shopModify(vo.getShop());
+		mapper.shopModify(shop);
 	}
 
 	@Override

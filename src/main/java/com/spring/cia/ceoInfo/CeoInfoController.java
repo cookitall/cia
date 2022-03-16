@@ -2,6 +2,7 @@ package com.spring.cia.ceoInfo;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,7 +38,9 @@ public class CeoInfoController {
 	@PostMapping("ceoLogin")
 	public String ceoLogin(String ceoId, String ceoPw, Model model) {
 		System.out.println("ceoLogin 요청 POST");
+		System.out.println("파라미터 확인" + ceoId + ceoPw);
 		CeoInfoVO vo = service.ceoLogin(ceoId, ceoPw);
+		System.out.println(vo);
 		model.addAttribute("ceo", vo);
 		return "redirect:/";
 	}
@@ -63,18 +66,17 @@ public class CeoInfoController {
 	//이메일 인증
 	@GetMapping("/mailCheck")
 	@ResponseBody
-	public String mailCheck(String ceoEmail) {
-		String email = ceoEmail;
+	public String mailCheck(String email) {
 		System.out.println("이메일 인증 요청이 들어옴!");
 		System.out.println("인증 이메일: " + email);
 		return mail.joinMail(email);		
 	}
 	//회원가입처리
 	@PostMapping("/ceoJoin")
-	public String ceoJoin(CeoInfoVO vo, RedirectAttributes ra) {
+	public String ceoJoin(CeoInfoVO vo, ShopVO shop, RedirectAttributes ra) {
 		System.out.println("ceoJoin 요청 POST");
-		service.ceoJoin(vo);
-		ra.addFlashAttribute("msg", "welcome CIA's CEO");
+		service.ceoJoin(vo, shop);
+		ra.addFlashAttribute("msg", "join");
 		return "redirect:/ceoInfo/ceoLogin";
 	}
 	
@@ -84,14 +86,40 @@ public class CeoInfoController {
 	public void ceoModify(HttpSession session, Model model) {
 		System.out.println("ceoModify 요청 GET");
 		String ceoId = ((CeoInfoVO)session.getAttribute("ceoLogin")).getCeoId();
-		service.ceoInfoGet(ceoId);
+		CeoInfoVO vo = service.ceoInfoGet(ceoId);
+		model.addAttribute("ceoModi", vo);
 
+	}
+	//비밀번호확인(비동기)
+	@ResponseBody 
+	@PostMapping("/pwCheck")
+	public String pwChk(@RequestBody String ceoOldPw,HttpSession session) {
+		System.out.println("ceo pw  확인 요청");
+		String ceoId = ((CeoInfoVO)session.getAttribute("ceoLogin")).getCeoId();
+		String result = service.ceoPwChk(ceoId);
+		if(result.equals(ceoOldPw)) {
+			return "ok";
+		} else {
+			return "duplicated";
+		}
 	}
 	//정보수정 처리
 	@PostMapping("/ceoModify")
-	public String ceoModify(CeoInfoVO vo) {
+	public String ceoModify(CeoInfoVO vo, ShopVO shop) {
 		System.out.println("ceoModify 요청 POST");
-		service.ceoModify(vo);
+		System.out.println(shop);
+		service.ceoModify(vo, shop);
 		return "redirect:/";
+	}
+	
+	
+	//사업자 탈퇴
+	@GetMapping("/ceoDelete")
+	public String ceoDelete(HttpSession session, RedirectAttributes ra) {
+		System.out.println("ceoDelete 요청");
+		String ceoId = ((CeoInfoVO)session.getAttribute("ceoLogin")).getCeoId();
+		service.ceoDelete(ceoId);
+		ra.addFlashAttribute("msg", "delete");
+		return "redirect:/ceoInfo/ceoLogin";
 	}
 }

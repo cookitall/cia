@@ -10,7 +10,10 @@ CREATE TABLE cia_shop
 	shop_addr2 varchar2(50) NOT NULL,
 	review_star number,
 	PRIMARY KEY (shop_name)
-);*/
+);
+ALTER TABLE cia_shop
+MODIFY (shop_num VARCHAR2(30));
+*/
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -24,7 +27,7 @@ public class ShopVO {
 	private String shopName;
 	private String shopCategory;
 	private String shopInfo;
-	private int shopNum;
+	private String shopNum;
 	private String shopAddr1;
 	private String shopAddr2;
 	private int reviewStar;

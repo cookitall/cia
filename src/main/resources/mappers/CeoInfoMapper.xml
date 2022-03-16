@@ -42,43 +42,46 @@
   	VALUES(#{ceoId}, #{ceoEmail}, #{ceoPw}, #{ceoName}, #{ceoPhone}, #{shopName})
   </insert>
   
-  <select id="ceoLogin" resultType="com.spring.cia.command.CeoInfoVO">
+  <select id="ceoLogin" resultType="com.spring.cia.command.CeoInfoVO" resultMap="ceoInfo">
   	SELECT * FROM cia_ceo_info
   	WHERE ceo_id = #{ceoId}
   	AND ceo_pw = #{ceoPw}
   </select>
   
   <select id="ceoPwChk" resultType="String">
-  	SELECT ceoPw
+  	SELECT ceo_Pw
   	FROM cia_ceo_info
   	WHERE ceo_id = #{ceoId}
   </select>
   
-  <select id="ceoInfoGet" resultMap="ceoInfo">
+  <select id="ceoInfoGet" resultMap="ceoInfo" resultType="com.spring.cia.command.CeoInfoVO">
   	SELECT ceo_id,
   		   ceo_email,
   		   ceo_name,
   		   ceo_phone,
-  		   shop_name,
-  		   s.shop_categoty,
+  		   ceo_regdate,
+  		   c.shop_name,
+  		   s.shop_name,
+  		   s.shop_category,
   		   s.shop_num,
   		   s.shop_info,
   		   s.shop_addr1,
   		   s.shop_addr2
-  	FROM cia_ceo_info c LEFT JOIN cia_shop s
+  	FROM cia_ceo_info c 
+  	LEFT OUTER JOIN cia_shop s
   	ON c.shop_name = s.shop_name
   	WHERE c.ceo_id = #{ceoId}
   </select>
   
   <update id="ceoModify">
   	UPDATE cia_ceo_info
-  	SET ceo_mail = #{ceoMail}, ceo_name = #{ceoName}, ceo_pw = #{ceoPw},
+  	SET ceo_email = #{ceoEmail}, ceo_name = #{ceoName}, ceo_pw = #{ceoPw},
   		ceo_phone = #{ceoPhone}
   	WHERE ceo_id = #{ceoId}
   </update>
   <update id="shopModify">
   	UPDATE cia_shop
-  	SET shop_categoey = #{shopCategort},
+  	SET shop_category = #{shopCategory},
   		shop_num = #{shopNum}, shop_info = #{shopInfo},
   		shop_addr1 = #{shopAddr1}, shop_addr2 = #{shopAddr2}
   	WHERE shop_name = #{shopName}

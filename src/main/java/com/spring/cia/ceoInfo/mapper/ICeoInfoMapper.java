@@ -15,7 +15,7 @@ public interface ICeoInfoMapper {
 	void shopJoin(ShopVO shop);
 	
 	//사업자 로그인
-	CeoInfoVO ceoLogin(@Param("ceoId")String ceoId, @Param("ceoPw")String Pw);
+	CeoInfoVO ceoLogin(@Param("ceoId")String ceoId,@Param("ceoPw")String ceoPw);
 	
 	//정보수정 비밀번호 체크
 	String ceoPwChk(String ceoId);

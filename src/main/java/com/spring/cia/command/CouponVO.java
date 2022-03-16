@@ -11,6 +11,9 @@ CREATE TABLE cia_coupons
    coupon_term_price number NOT NULL, --사용 조건
    PRIMARY KEY (coupon_name)
 );
+
+ALTER TABLE cia_coupons
+ADD (coupon_code varchar2(20) NOT NULL);
 */
 
 import java.sql.Timestamp;
