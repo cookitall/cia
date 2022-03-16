@@ -28,7 +28,7 @@ public class CouponListRestController {
 		System.out.println("Check coupon VO" + couponVO);
 		HashMap<String, String> result = new HashMap <String,String>();
 		
-		//쿠폰 코드 생성해서 map 에 넣기
+		//쿠폰 코드 생성해서 map 에 넣기 w
 		String couponCode = service.generateCoupon(couponVO);
 		System.out.println("생성된 쿠폰코드 => " + couponCode);
 		result.put("couponCode", couponCode);
