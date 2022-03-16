@@ -28,6 +28,21 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+### Project ###
+pom.properties
+Thumbs.db
+.settings
+.classpath
+/bin
+*.java.hsp
+*.sonarj
+*.sw*
+.DS_Store
+.springBeans
+.externalToolBuilders
+.project
+
+
 ### STS ###
 .apt_generated
 .classpath
