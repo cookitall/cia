@@ -14,6 +14,8 @@ CREATE TABLE cia_coupons
 
 ALTER TABLE cia_coupons
 ADD (coupon_code varchar2(20) NOT NULL);
+
+ALTER TABLE CIA_COUPONS DROP PRIMARY KEY;
 */
 
 import java.sql.Timestamp;
@@ -32,6 +34,7 @@ public class CouponVO {
 	private Timestamp couponRegDate;
 	private Timestamp couponEndDate;
 	private String shopName;
+	private String couponCode;
 	private int couponRemain;
 	private int couponTermPrice;
 	
