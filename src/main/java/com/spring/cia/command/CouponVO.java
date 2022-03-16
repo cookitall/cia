@@ -13,7 +13,7 @@ CREATE TABLE cia_coupons
 );
 */
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -24,13 +24,21 @@ import lombok.ToString;
 @ToString
 public class CouponVO {
 	
+	//쿠폰 이름
 	private String couponName;
+	//쿠폰 할인 금액
 	private int couponDiscount;
-	private Timestamp couponRegDate;
-	private Timestamp couponEndDate;
+	//시작 사용 기간
+	private Date couponRegDate;
+	//끝나는 사용 기간
+	private Date couponEndDate;
+	//가게 이름
 	private String shopName;
+	//쿠폰 수량
 	private int couponRemain;
+	//사용 조건
 	private int couponTermPrice;
-	
+	//쿠폰 코드
+	private String couponCode;
 
 }

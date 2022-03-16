@@ -6,17 +6,7 @@
 
 <title>주문 현황</title>
 <div class="ceo-page">
-	<aside id="aside">
-		<div class="aside-title">판매자 메뉴</div>
-		<ul>
-			<li>주문현황</li>
-			<li>매출내역</li>
-			<li>메뉴관리</li>
-			<li>리뷰관리</li>
-			<li>쿠폰관리</li>
-			<li>정보관리</li>
-		</ul>
-	</aside>
+	<%@ include file="../include/aside.jsp"%>
  <div class="content">
  	<div class="content-title">주문내역</div>
     <div class="order-list">
