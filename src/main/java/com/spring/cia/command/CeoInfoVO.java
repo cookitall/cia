@@ -26,7 +26,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class CeoInfoVO {
-//커밋용주석
+
 	
  private String ceoId;
  private String ceoEmail;

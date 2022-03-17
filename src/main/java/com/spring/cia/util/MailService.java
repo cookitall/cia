@@ -10,7 +10,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MailService {
+public class MailService  {
 
 	@Autowired
 	private JavaMailSender sender;

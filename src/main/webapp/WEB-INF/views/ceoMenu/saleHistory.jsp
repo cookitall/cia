@@ -7,17 +7,7 @@
 
 <title>매출 내역</title>
 <div class="ceo-page">
-	<aside id="aside">
-		<div class="aside-title">판매자 메뉴</div>
-		<ul>
-			<li>주문현황</li>
-			<li>매출내역</li>
-			<li>메뉴관리</li>
-			<li>리뷰관리</li>
-			<li>쿠폰관리</li>
-			<li>정보관리</li>
-		</ul>
-	</aside>
+	<%@ include file="../include/aside.jsp"%>
 <div class="content">
           <div class="content-title">매출내역</div>
           <div class="saleHistoryMain">
@@ -85,10 +75,10 @@
 
               <div class="day-period">
                 <h4>일간 내역 검색</h4>
-                <form action="#">
-                  <input name="dayHistorySta" type="date" max="9999-12-31" />
+                <form action="test" method="post">
+                  <input name="dayHistorySta" type="date" max="9999-12-31"/>
                   ~
-                  <input name="dayHistoryEnd" type="date" max="9999-12-31" />
+                  <input name="dayHistoryEnd" type="date" max="9999-12-31"/>
                   <button type="submit">조회</button>
                 </form>
                 <table>

@@ -11,7 +11,7 @@
 	<mvc:interceptors>
 	
 		<mvc:interceptor>
-			<mvc:mapping path="/ceoInfo/ceoLogin"/>
+			<mvc:mapping path="/ceoInfo/ceoLogin" />
 			<ref bean="CeoLoginSuccessHandler" />
 		</mvc:interceptor>
 		

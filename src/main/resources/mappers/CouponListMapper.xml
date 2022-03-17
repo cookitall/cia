@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.cia.ceoMenu.couponList.mapper.ICouponListMapper">
+
+	<insert id="generateCoupon">
+		INSERT INTO cia_coupons
+		(coupon_name, coupon_discount,
+		coupon_regdate, coupon_enddate, shop_name, coupon_remain,
+		coupon_term_price, coupon_code)
+		VALUES(
+			#{coupon_name}, #{coupon_discount},
+			#{coupon_regdate}, #{coupon_enddate}, #{shop_name},
+			#{coupon_remain}, #{coupon_term_price}, #{coupon_code}
+		)
+	</insert>
+	<select id="getList" resultType="com.spring.cia">
+		SELECT 
+		coupon_name, coupon_discount, coupon_regdate, coupon_enddate,
+		coupon_remain, coupon_term_price, coupon_code 
+		FROM cia_coupons
+	</select>
+
+</mapper>
+  

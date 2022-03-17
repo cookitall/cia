@@ -28,7 +28,7 @@
     
     <div class="headLogin">
     	<c:choose>
-    		<c:when test="${ceoLogin != null}">
+    		<c:when test="${ceoLogin != null}" >
         		<li><a href="<c:url value='/ceoInfo/ceoModify' />"><span class="btn-login">사업자 정보</span></a></li>
         	</c:when>
         	<c:when test="${userLogin != null}">

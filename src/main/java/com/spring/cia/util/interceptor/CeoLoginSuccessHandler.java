@@ -12,7 +12,7 @@ import com.spring.cia.command.CeoInfoVO;
 
 
 //커밋용주석
-public class CeoLoginSuccessHandler implements HandlerInterceptor{
+public class CeoLoginSuccessHandler implements HandlerInterceptor {
 
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,

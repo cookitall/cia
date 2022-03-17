@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../include/header.jsp"%>
-<!-- 커밋용주석 -->
+
 <title>사업자 로그인</title>
 
 
