@@ -36,8 +36,8 @@
 	            </div>
 	            
 	            <div class="btn-wrap form-group">
-	                <button type="button" class="login-btn" id="login-btn">로그인</button>
-	                <button type="button" class="join-btn" id="join-btn">회원가입</button>
+	                <button type="button" class="login-btn" id="ceologin-btn">로그인</button>
+	                <button type="button" class="join-btn" id="ceojoin-btn">회원가입</button>
 	            </div>
             </form>
 
@@ -46,7 +46,7 @@
 <%@ include file="../include/footer.jsp"%>
 
 <script>
-	const msg = ${msg};
+	const msg = '${msg}';
 	if(msg === 'join') {
 		alert('Welcome~ CIA CEO');
 	} else if(msg === 'delete') {
@@ -54,13 +54,13 @@
 	}
 	
 	$(function() {
-		$('#join-btn').click(function() {
+		$('#ceojoin-btn').click(function() {
 			 location.href='<c:url value="/ceoInfo/ceoJoin"/>'
 		})
 	});
 
 	$(function() {
-		$('#login-btn').click(function() {
+		$('#ceologin-btn').click(function() {
 			if($('#ceoId').val() === '') {
 				alert('아이디를 작성하세요');
 				return;

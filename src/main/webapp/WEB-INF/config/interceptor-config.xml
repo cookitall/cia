@@ -6,13 +6,17 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 		
 	<bean id="CeoLoginSuccessHandler" class="com.spring.cia.util.interceptor.CeoLoginSuccessHandler"/>	
-	
+	<bean id="UserLoginSuccessHandler" class="com.spring.cia.util.interceptor.UserLoginSuccessHandler"/>	
 	
 	<mvc:interceptors>
 	
 		<mvc:interceptor>
 			<mvc:mapping path="/ceoInfo/ceoLogin" />
 			<ref bean="CeoLoginSuccessHandler" />
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/userInfo/login" />
+			<ref bean="UserLoginSuccessHandler" />
 		</mvc:interceptor>
 		
 		

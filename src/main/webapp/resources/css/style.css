@@ -333,6 +333,7 @@ footer .company-info p {
   width: 500px;
   padding: 10px;
 }
+
 .login-main span {
   display: inline-block;
   padding: 0px 80px;
@@ -403,10 +404,6 @@ footer .company-info p {
   margin-right: 2px;
 }
 
-.join-main .join-form #user-id {
-  margin-left: 5px;
-  width: 345px;
-}
 
 .join-main .join-form .mail-check {
   display: inline;
@@ -417,10 +414,11 @@ footer .company-info p {
   border-radius: 5px;
 }
 
-.join-main .join-form #user-address {
+#userAddr2,#userAddr1,#userId{
   margin-left: 5px;
   width: 345px;
 }
+
 
 .join-main .join-form .address-check {
   display: inline;

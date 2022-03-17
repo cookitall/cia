@@ -12,7 +12,7 @@
               	
         <label for="ceo-id">아이디</label>
         <div class="id-wrap">
-        	<input type="email" name="ceoId" id="ceoId" placeholder="아이디를 입력해주세요" required/>
+        	<input type="text" name="ceoId" id="ceoId" placeholder="아이디를 입력해주세요" required/>
             <button class="mail-check" id="id-check" type="button">중복확인</button>
             <span id="idError" class="error"></span>
         </div>

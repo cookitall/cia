@@ -9,7 +9,7 @@ import com.spring.cia.command.ShopVO;
 
 @Service
 public class CeoInfoService implements ICeoInfoService {
-
+//1
 	@Autowired
 	private ICeoInfoMapper mapper;
 	

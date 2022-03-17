@@ -22,7 +22,7 @@ import com.spring.cia.util.MailService;
 @Controller
 @RequestMapping("/ceoInfo")
 public class CeoInfoController {
-//커밋용 주석
+
 	@Autowired
 	private ICeoInfoService service;
 	@Autowired

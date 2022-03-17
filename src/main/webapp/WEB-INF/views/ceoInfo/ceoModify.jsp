@@ -26,7 +26,7 @@
 				
 				<label for="ceo-id">아이디</label>
 				<div class="id-wrap">
-					<input type="email" name="ceoId" id="ceoId" value="${ceoModi.ceoId}" readonly required />
+					<input type="text" name="ceoId" id="ceoId" value="${ceoModi.ceoId}" readonly required />
 				</div>
 
 		        <label for="ceo-email">이메일</label>
