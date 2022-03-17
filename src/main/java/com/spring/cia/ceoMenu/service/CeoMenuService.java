@@ -1,4 +1,4 @@
-package com.spring.cia.ceoMenu.couponList.service;
+package com.spring.cia.ceoMenu.service;
 
 import java.util.List;
 import java.util.Random;
@@ -6,15 +6,18 @@ import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.spring.cia.ceoMenu.couponList.mapper.ICouponListMapper;
+import com.spring.cia.ceoMenu.mapper.ICeoMenuMapper;
 import com.spring.cia.command.CouponVO;
 
 @Service
-public class CouponListService implements ICouponListService {
+public class CeoMenuService implements ICeoMenuService {
 
 	@Autowired
-	private ICouponListMapper mapper;
+	private ICeoMenuMapper mapper;
 	
+	/*
+	 * couponList
+	 */
 	@Override
 	public String generateCoupon(CouponVO couponVO) {
 
@@ -54,5 +57,46 @@ public class CouponListService implements ICouponListService {
 	public List<CouponVO> getList() {
 		return mapper.getList();
 	}
+	
+
+	/*
+	 * couponList 끝
+	 */
+
+	/*
+	 * menuList
+	 */
+	
+
+	/*
+	 * menuList 끝
+	 */
+	
+
+	/*
+	 * orderList
+	 */
+	
+
+	/*
+	 * orderList 끝
+	 */
+	
+
+	/*
+	 * saleHistory
+	 */
+	
+	/*
+	 * saleHistory 끝
+	 */
+	
+	/*
+	 * shopReviewList
+	 */
+	
+	/*
+	 * shopReviewList 끝
+	 */
 
 }
