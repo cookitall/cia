@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>	
 <%@ include file="../include/header.jsp"%>
 <title>사업자 가입</title>
-
+<!-- 커밋용주석 -->
  <section class="join-main">
         <!-- 로고 -->
         <a class="logo-img" href="<c:url value='/cia' />"></a>

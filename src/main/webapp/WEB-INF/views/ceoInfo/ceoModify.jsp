@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
-
+<!-- 커밋용주석 -->
 <%@ include file="../include/header.jsp"%>
 <title>사업자 정보관리</title>
 <div class="ceo-page">

@@ -6,7 +6,7 @@ import com.spring.cia.command.CeoInfoVO;
 import com.spring.cia.command.ShopVO;
 
 public interface ICeoInfoService {
-
+//커밋용 주석
 	//회원가입 아이디 중복체크
 	int ceoIdChk(String ceoId);
 	
