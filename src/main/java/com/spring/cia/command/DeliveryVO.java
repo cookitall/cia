@@ -26,5 +26,5 @@ public class DeliveryVO {
 	private Timestamp orderDate;
 	private int orderTimer;
 	private String orderState;
-	private int deliveryPrive;
+	private int deliveryPrice;
 }
