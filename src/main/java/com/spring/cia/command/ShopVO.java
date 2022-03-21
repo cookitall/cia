@@ -13,6 +13,8 @@ CREATE TABLE cia_shop
 );
 ALTER TABLE cia_shop
 MODIFY (shop_num VARCHAR2(30));
+ALTER TABLE cia_shop ADD delivery_price NUMBER DEFAULT 0 NOT NULL;
+ALTER TABLE cia_shop DROP COLUMN review_star;
 */
 import lombok.Getter;
 import lombok.Setter;
@@ -30,6 +32,6 @@ public class ShopVO {
 	private String shopNum;
 	private String shopAddr1;
 	private String shopAddr2;
-	private int reviewStar;
+	private int deliveryPrice;
 
 }

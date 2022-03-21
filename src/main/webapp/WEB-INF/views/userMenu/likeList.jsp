@@ -6,72 +6,77 @@
     
     
 <div class="user-page">
-    <aside id="aside">
-          <div class="aside-title">
+	<aside id="aside">
+		<div class="aside-title">
             My<br /><br />
             쿡잇올!
           </div>
           <ul>
-	      	<li>내 포인트</li>
-	        <li>주문내역</li>
-	        <li>찜 목록</li>
-	        <li>리뷰 목록</li>
-	        <li>내 정보 수정</li>
+            <li><a href="<c:url value='/userMenu/userPoint'/>">내 포인트</a></li>
+            <li><a href="<c:url value='/userMenu/orderHistory'/>">주문내역</a></li>
+            <li><a href="<c:url value='/userMenu/likeList'/>">찜 목록</a></li>
+            <li><a href="<c:url value='/userMenu/reviewList'/>">리뷰 목록</a></li>
+            <li><a href="<c:url value='/userInfo/modify'/>">내 정보 수정</a></li>
           </ul>
-    </aside>
-           
+	</aside>
+	
 	<div class="content">
 		<section class="like-container">
     		<p class="like-title">찜 목록</p>
 
+
             <div class="like-wrap">
+            
+			<c:forEach var="like" items="${like}">
             	<div class="like-item">
-                	<img class="store-logo" src="../img/chiken.jpg" alt="" />
-                	<p class="like-store">마라탕 고양점</p>
-                	<p class="star">⭐ 4.8</p>
+                	<img class="store-logo" src="<c:url value='/img/${like.shopCategory}.png'/>" alt="" />
+                	<p class="like-store">${like.shopName}</p>
               	</div>
+			</c:forEach>
 
-              	<div class="like-item">
-                	<img class="store-logo" src="../img/chiken.jpg" alt="" />
-                	<p class="like-store">마라탕 고양점</p>
-                	<p class="star">⭐ 4.8</p>
-              	</div>
-
-              	<div class="like-item">
-                	<img class="store-logo" src="../img/chiken.jpg" alt="" />
-                	<p class="like-store">마라탕 고양점</p>
-                	<p class="star">⭐ 4.8</p>
-              	</div>
-
-              	<div class="like-item">
-                	<img class="store-logo" src="../img/chiken.jpg" alt="" />
-               	 	<p class="like-store">마라탕 고양점</p>
-               	 	<p class="star">⭐ 4.8</p>
-              	</div>
-
-              	<div class="like-item">
-                	<img class="store-logo" src="../img/chiken.jpg" alt="" />
-                	<p class="like-store">마라탕 고양점</p>
-                	<p class="star">⭐ 4.8</p>
-              	</div>
-
-              	<div class="like-item">
-                	<img class="store-logo" src="../img/chiken.jpg" alt="" />
-                	<p class="like-store">마라탕 고양점</p>
-                	<p class="star">⭐ 4.8</p>
-              	</div>
             </div>
+            
 		</section>
-        <ul class="pagination">
-            <li><a href="#">이전</a></li>
-            <li><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">5</a></li>
-            <li><a href="#">다음</a></li>
-        </ul>
+		
+		
+		
+  						<form action="<c:url value='/userMenu/likeList' />" name="pageForm" class="pageForm">
+	                        <div class="text-center clearfix">
+	                            <hr>
+	                            <ul class="pagination" id="pagination">
+	                            	<c:if test="${pc.prev}">
+	                                	<li><a href="#" data-pageNum="${pc.beginPage-1}">이전</a></li>
+	                                </c:if>
+	                                
+	                                <c:forEach var="num" begin="${pc.beginPage}" end="${pc.endPage}">
+	                                	<li class="${pc.paging.pageNum == num ? 'active' : 'nop'}"><a href="#" data-pageNum="${num}">${num}</a></li>
+	                                </c:forEach>
+	                                
+	                                <c:if test="${pc.next}">
+	                               		<li><a href="#" data-pageNum="${pc.endPage+1}">다음</a></li>
+	                                </c:if>
+	                            </ul>
+	                            
+	                            <input type="hidden" name="pageNum" value="${pc.paging.pageNum}">
+	                            <input type="hidden" name="countPerPage" value="${pc.paging.countPerPage}">
+	
+	                        </div>
+                        </form>
 	</div>
 </div>
     
     <%@ include file="../include/footer.jsp" %>
+    
+ <script>
+	$(function() {
+		$('#pagination').on('click', 'a', function(e) {
+			e.preventDefault();
+			console.log($(this));
+			const value = $(this).data('pagenum');
+			console.log(value);
+			document.pageForm.pageNum.value = value;
+			document.pageForm.submit();
+		});
+	});
+ 
+</script>   

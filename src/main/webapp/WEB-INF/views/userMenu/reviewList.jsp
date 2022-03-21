@@ -13,11 +13,11 @@
             쿡잇올!
           </div>
           <ul>
-            <li>내 포인트</li>
-            <li>주문내역</li>
-            <li>찜 목록</li>
-            <li>리뷰 목록</li>
-            <li>내 정보 수정</li>
+            <li><a href="<c:url value='/userMenu/userPoint'/>">내 포인트</a></li>
+            <li><a href="<c:url value='/userMenu/orderHistory'/>">주문내역</a></li>
+            <li><a href="<c:url value='/userMenu/likeList'/>">찜 목록</a></li>
+            <li><a href="<c:url value='/userMenu/reviewList'/>">리뷰 목록</a></li>
+            <li><a href="<c:url value='/userInfo/modify'/>">내 정보 수정</a></li>
           </ul>
 	</aside>
 	
@@ -26,48 +26,81 @@
           <h2 class="title">리뷰 목록</h2>
             
             <!-- 반복문 요소 -->
-          <div class="review">
-          	<div class="user">
-            	<div class="buy-info">
-            		<div class="name">손오공 마라탕 ></div>
-                    <div class="star-time">⭐⭐⭐⭐⭐ 2021년 12월 13일</div>
-                    <ul>
-                    	<li class="menu">마라탕</li>
-                    	<li class="menu">마라샹궈</li>
-                    </ul>
-                </div>
-                <div class="btn-wrap">
-                  <a class="yellow-btn" href="">수정</a>
-                  <a class="pink-btn" href="">삭제</a>
-                </div>
+          <c:forEach var="review" items="${reviews}">
+	          <div class="review">
+	          	<div class="user">
+	            	<div class="buy-info">
+	            		<div class="name">${review.shopName}</div>
+	                    <div class="star-time">${review.reviewDate}</div>
+	                    <ul>
+	                    	<li class="menu">${review.menuName}</li>
+	                    	
+	                    </ul>
+	                </div>
+	                <div class="btn-wrap">
+	                  <a class="pink-btn" href="">삭제</a>
+	                </div>
+				</div>
+	            <div class="text-wrap">
+	            	<textarea name="" cols="60" rows="2" readonly>
+						${review.reviewContent}
+					</textarea>
+	           </div>
+	           
+	           <c:forEach var="reply" items="${replys}">
+	           	   <c:if test="${reply.reviewNum == review.reviewNum}">
+			           <div class="ceo">
+			           		<div class="text-wrap">
+			           	
+			                	<textarea name="" cols="60" rows="2" readonly>
+							  		${reply.shopName} : "${reply.replyContent}"
+							  	</textarea>
+			                </div>
+			            </div>
+		        	</c:if>
+	            </c:forEach>
 			</div>
-            <div class="text-wrap">
-            	<textarea name="" cols="60" rows="2" readonly>
-					맛있게 잘 먹었습니다~
-				</textarea>
-           </div>
-           <div class="ceo">
-           		<div class="text-wrap">
-                	<textarea name="" cols="60" rows="2" readonly>
-				  		손오공 마라탕: 주문해 주셔서 감사합니다
-				  	</textarea>
-                </div>
-            </div>
-		</div>
+		</c:forEach>
             <!-- 반복문 요소 end -->
                        
         </section>
-          <ul class="pagination">
-            <li><a href="#">이전</a></li>
-            <li><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">5</a></li>
-            <li><a href="#">다음</a></li>
-        </ul>
+  						<form action="<c:url value='/userMenu/likeList' />" name="pageForm">
+	                        <div class="text-center clearfix">
+	                            <hr>
+	                            <ul class="pagination" id="pagination">
+	                            	<c:if test="${pc.prev}">
+	                                	<li><a href="#" data-pageNum="${pc.beginPage-1}">이전</a></li>
+	                                </c:if>
+	                                
+	                                <c:forEach var="num" begin="${pc.beginPage}" end="${pc.endPage}">
+	                                	<li class="${pc.paging.pageNum == num ? 'active' : 'nop'}"><a href="#" data-pageNum="${num}">${num}</a></li>
+	                                </c:forEach>
+	                                
+	                                <c:if test="${pc.next}">
+	                               		<li><a href="#" data-pageNum="${pc.endPage+1}">다음</a></li>
+	                                </c:if>
+	                            </ul>
+	                            
+	                            <input type="hidden" name="pageNum" value="${pc.paging.pageNum}">
+	                            <input type="hidden" name="countPerPage" value="${pc.paging.countPerPage}">
+	                        </div>
+                        </form>
 	</div>
 </div>
 
 
 <%@ include file="../include/footer.jsp"%>
+    
+ <script>
+	$(function() {
+		$('#pagination').on('click', 'a', function(e) {
+			e.preventDefault();
+			console.log($(this));
+			const value = $(this).data('pagenum');
+			console.log(value);
+			document.pageForm.pageNum.value = value;
+			document.pageForm.submit();
+		});
+	});
+ 
+</script> 

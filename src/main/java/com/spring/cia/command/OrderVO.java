@@ -38,4 +38,6 @@ public class OrderVO {
 	private String shopName;
 	private String userId;
 	private String payway;
+	
+	private OrderDetailVO odvo;
 }

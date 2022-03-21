@@ -23,6 +23,7 @@
   	<result property="shopNum" column="shop_num"/>
   	<result property="shopAddr1" column="shop_addr1"/>
   	<result property="shopAddr2" column="shop_addr2"/>
+  	<result property="deliveryPrice" column="delivery_price"/>
   </resultMap>
   
   <select id="ceoIdChk" resultType="int">
@@ -48,10 +49,16 @@
   	AND ceo_pw = #{ceoPw}
   </select>
   
+  
   <select id="ceoPwChk" resultType="String">
   	SELECT ceo_Pw
   	FROM cia_ceo_info
   	WHERE ceo_id = #{ceoId}
+  </select>
+  
+  <select id="shopInfoGet" resultType="com.spring.cia.command.ShopVO" resultMap="shopVO">
+  	SELECT * FROM cia_shop
+  	WHERE shop_nmae = #{shopName}
   </select>
   
   <select id="ceoInfoGet" resultMap="ceoInfo" resultType="com.spring.cia.command.CeoInfoVO">
@@ -83,7 +90,8 @@
   	UPDATE cia_shop
   	SET shop_category = #{shopCategory},
   		shop_num = #{shopNum}, shop_info = #{shopInfo},
-  		shop_addr1 = #{shopAddr1}, shop_addr2 = #{shopAddr2}
+  		shop_addr1 = #{shopAddr1}, shop_addr2 = #{shopAddr2},
+  		delivery_price = {deliveryPrice}
   	WHERE shop_name = #{shopName}
   </update>
   

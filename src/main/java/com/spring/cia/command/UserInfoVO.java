@@ -9,7 +9,7 @@ CREATE TABLE cia_user_info
 	user_phone varchar2(50) NOT NULL,
 	user_addr1 varchar2(50) NOT NULL,
 	user_addr2 varchar2(50) NOT NULL,
-	user_point number,
+	user_point number DEFAULT 0 NOT NULL,
 	PRIMARY KEY (user_id)
 );*/
 import lombok.Getter;

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.spring.cia.userMenu.mapper.IUserMenuMapper">
+  	
+  	<resultMap type="com.spring.cia.command.UserlikeVO" id="userLike">
+  		<id property="likeNum" column="like_num"/>
+  		<result property="userId" column="user_id"/>
+  		<result property="shopName" column="shop_name"/>
+  	</resultMap>
+  
+  <resultMap type="com.spring.cia.command.ShopVO" id="shopVO">
+  	<id property="shopName" column="shop_name"/>
+  	<result property="shopCategory" column="shop_category"/>
+  	<result property="shopInfo" column="shop_info"/>
+  	<result property="shopNum" column="shop_num"/>
+  	<result property="shopAddr1" column="shop_addr1"/>
+  	<result property="shopAddr2" column="shop_addr2"/>
+  	<result property="deliveryPrice" column="delivery_price"/>
+  </resultMap>
+  
+  <resultMap type="com.spring.cia.command.OrderVO" id="order">
+  	<id property="orderNum" column="order_num"/>
+  	<result property="orderDate" column="order_date"/>
+  	<result property="shopName" column="shop_name"/>
+  	<result property="userId" column="user_id"/>
+  	<result property="payway" column="payway"/>
+  	<collection property="odvo" resultMap="orDeVO"/>
+  </resultMap>
+  
+  <resultMap type="com.spring.cia.command.OrderDetailVO" id="orDeVO">
+  	<id property="orderNum" column="order_num"/>
+  	<result property="menuName" column="menu_name"/>
+  	<result property="orderPrice" column="order_price"/>
+  	<result property="orderMsg" column="order_msg"/>
+  	<result property="userName" column="user_name"/>
+  	<result property="userAddr1" column="user_addr1"/>
+  	<result property="userAddr2" column="user_addr2"/>
+  </resultMap>
+  
+  <resultMap type="com.spring.cia.command.UserInfoVO" id="user">
+  	<id property="userId" column="user_id"/>
+  	<result property="userEmail" column="user_email"/>
+  	<result property="userPw" column="user_pw"/>
+  	<result property="userName" column="user_name"/>
+  	<result property="userPhone" column="user_phone"/>
+  	<result property="userAddr1" column="user_addr1"/>
+  	<result property="userAddr2" column="user_addr2"/>
+  	<result property="userPoint" column="user_point"/>
+  </resultMap>
+  
+  <resultMap type="com.spring.cia.command.ReviewVO" id="reviews">
+  	<id property="reviewNum" column="review_num"/>
+  	<result property="userId" column="user_id"/>
+  	<result property="orderNum" column="order_num"/>
+  	<result property="menuName" column="menu_name"/>
+  	<result property="shopName" column="shop_name"/>
+  	<result property="reviewContent" column="review_content"/>
+  	<result property="reviewStar" column="review_star"/>
+  	<result property="reviewDate" column="review_date"/>
+  </resultMap>
+  
+  <resultMap type="com.spring.cia.command.ReplyVO" id="replys">
+  	<id property="replyNum" column="reply_num"/>
+  	<result property="reviewNum" column="review_num"/>
+  	<result property="shopName" column="shop_name"/>
+  	<result property="replyContent" column="reply_content"/>
+  	<result property="replyDate" column="reply_date"/>
+  </resultMap>
+  
+  <select id="likelist" resultMap="userLike">
+		SELECT * FROM	
+			(
+			SELECT ROWNUM AS rn, tbl.* FROM
+				(
+				SELECT * FROM cia_user_like
+				WHERE user_id = #{userId}
+				ORDER BY like_num DESC
+				) tbl
+			)
+		<![CDATA[
+		WHERE rn > (#{pvo.pageNum} - 1) * #{pvo.countPerPage}
+		AND rn <= #{pvo.pageNum} * #{pvo.countPerPage}
+		]]>  	
+  </select>
+  
+  <select id="getLikeTotal" resultType="int">
+  	SELECT COUNT(*)
+  	FROM cia_user_like
+  	WHERE user_id = #{userId}
+  </select>
+  
+  <select id="shopInfoGet" resultMap="shopVO">
+  	SELECT shop_name,
+  		   shop_category 
+  	FROM cia_shop
+  	WHERE shop_name = #{shopName}
+  </select>
+  
+  <select id="orderHistory" resultMap="order">	
+		SELECT * FROM	
+			(
+			SELECT ROWNUM AS rn, tbl.* FROM
+				(
+				SELECT o.order_date, 
+					   o.shop_name,
+					   d.order_price
+  				FROM cia_order o 
+  				LEFT OUTER JOIN cia_order_detail d
+				ON o.order_num = d.order_num 
+				WHERE user_id = #{userId}
+				ORDER BY o.order_num DESC
+				) tbl
+			)
+		<![CDATA[
+		WHERE rn > (#{pvo.pageNum} - 1) * #{pvo.countPerPage}
+		AND rn <= #{pvo.pageNum} * #{pvo.countPerPage}
+		]]>   	
+  </select>
+  
+  <select id="getOrHiTotal" resultType="int">
+  	SELECT COUNT(*)
+  	FROM cia_order
+  	WHERE user_id = #{userId}
+  </select>
+  
+  <select id="pointView" resultMap="user">
+  	SELECT user_id,
+  		   user_point
+  	FROM cia_user_info
+  	WHERE user_id = #{userId}	   
+  </select>
+  
+  <update id="pointModi">
+  	UPDATE cia_user_info
+  	SET user_point = #{userPoint}
+  	WHERE user_id = #{userId}
+  </update>
+  
+  <select id="reivewList" resultMap="reviews">
+		SELECT * FROM	
+			(
+			SELECT ROWNUM AS rn, tbl.* FROM
+				(
+				SELECT * FROM cia_review
+				WHERE user_id = #{userId}
+				ORDER BY review_num DESC
+				) tbl
+			)
+		<![CDATA[
+		WHERE rn > (#{pvo.pageNum} - 1) * #{pvo.countPerPage}
+		AND rn <= #{pvo.pageNum} * #{pvo.countPerPage}
+		]]>  
+  </select>
+  
+  <select id="getReviewTotal" resultType="int">
+  	SELECT COUNT(*)
+  	FROM cia_review
+    WHERE user_id = #{userId}
+  </select>
+  
+  <select id="replyContent" resultMap="replys">
+  	SELECT * FROM cia_review_reply
+  	WHERE review_num = #{reviewNum}
+  </select>
+  
+  </mapper>

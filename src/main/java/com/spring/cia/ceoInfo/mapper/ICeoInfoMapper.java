@@ -23,6 +23,7 @@ public interface ICeoInfoMapper {
 	
 	//정보 가져오기
 	CeoInfoVO ceoInfoGet(String ceoId);
+	ShopVO shopInfoGet(String ShopName);
 	
 	//사업자 정보수정
 	void ceoModify(CeoInfoVO vo);

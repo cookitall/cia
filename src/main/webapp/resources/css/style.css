@@ -530,19 +530,22 @@ footer .company-info p {
   display: inline-block;
 }
 .pagination li {
-  border: 1px solid lightblue;
-  background-color: lightblue;
+  border: 1px solid var(--light-gray);
   border-radius: 4px;
   width: 2.5em;
   height: 1.5em;
   text-align: center;
 }
-.pagination li:nth-child(2) {
-  border: 0px;
-  background-color: #f1f1f1;
+
+.pagination .nop{
+	background-color: var(--light-gray);
 }
+.pagination .active {
+	background-color:var(--prime-yellow);
+}
+
 .pagination li a {
-  font-size: 0.8em;
+  font-size: 1em;
 }
 /* paging end */
 

@@ -4,7 +4,7 @@ package com.spring.cia.command;
 CREATE TABLE cia_delivery
 (
 	order_num number NOT NULL,
-	order_date date NOT NULL,
+	order_date date DEFAULT sysdate NOT NULL,
 	order_timer number NOT NULL,
 	order_state varchar2(50) NOT NULL,
 	delivery_price number,

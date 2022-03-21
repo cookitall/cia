@@ -6,19 +6,19 @@
 
 
 <div class="user-page">
-    <aside id="aside">
-          <div class="aside-title">
+	<aside id="aside">
+		<div class="aside-title">
             My<br /><br />
             쿡잇올!
           </div>
-          	<ul>
-	            <li>내 포인트</li>
-	            <li>주문내역</li>
-	            <li>찜 목록</li>
-	            <li>리뷰 목록</li>
-	            <li>내 정보 수정</li>
+          <ul>
+            <li><a href="<c:url value='/userMenu/userPoint'/>">내 포인트</a></li>
+            <li><a href="<c:url value='/userMenu/orderHistory'/>">주문내역</a></li>
+            <li><a href="<c:url value='/userMenu/likeList'/>">찜 목록</a></li>
+            <li><a href="<c:url value='/userMenu/reviewList'/>">리뷰 목록</a></li>
+            <li><a href="<c:url value='/userInfo/modify'/>">내 정보 수정</a></li>
           </ul>
-        </aside>
+	</aside>
     
     
      <section class="join-main">

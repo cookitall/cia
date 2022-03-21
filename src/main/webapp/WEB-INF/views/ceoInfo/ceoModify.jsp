@@ -75,9 +75,10 @@
 		          	<option value="pizza">피자</option>
 		          	<option value="west">양식</option>
 		          </select>
+		          
+		        <label for="del-price">배달비</label> 
+				<input type="text" name="deliveryPrice" id="deliveryPrice" value="${ceoModi.shop.deliveryPrice}" required />
 					
-				<label for="license-number">사업자등록번호</label> 
-				<input type="text" name="shopNum" id="shopNum" value="${ceoModi.shop.shopNum}" required /> 
 					
 				<label for="industy">상점 공지/정보</label>
                 <input type="text" name="shopInfo" id="shopInfo" value="${ceoModi.shop.shopInfo}" required  style="height: 100px;"/>	

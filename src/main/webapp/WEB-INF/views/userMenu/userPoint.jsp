@@ -13,19 +13,19 @@
             쿡잇올!
           </div>
           <ul>
-            <li>내 포인트</li>
-            <li>주문내역</li>
-            <li>찜 목록</li>
-            <li>리뷰 목록</li>
-            <li>내 정보 수정</li>
+            <li><a href="<c:url value='/userMenu/userPoint'/>">내 포인트</a></li>
+            <li><a href="<c:url value='/userMenu/orderHistory'/>">주문내역</a></li>
+            <li><a href="<c:url value='/userMenu/likeList'/>">찜 목록</a></li>
+            <li><a href="<c:url value='/userMenu/reviewList'/>">리뷰 목록</a></li>
+            <li><a href="<c:url value='/userInfo/modify'/>">내 정보 수정</a></li>
           </ul>
 	</aside>
         
     <div class="content">
     	<section class="mypointMain">
         	<div class="pointbox">
-              <h1>홍길동님 환영합니다!</h1>
-              <div class="point">보유포인트 35,600원</div>
+              <h1>${point.userId}님 환영합니다!</h1>
+              <div class="point">보유포인트 ${point.userPoint}원</div>
               <br />
               <span>1원 이상 1원 단위로 사용 가능</span> <br />
               <span>최대 50만원까지 보유 가능</span><br /><br />
@@ -50,15 +50,15 @@
 
             <div class="user-point">
               현재 보유중인 포인트<br>
-              23.000원
+              ${point.userPoint}원
             </div>
-            <form action="">
-              <input type="number" min="1" value="1000" required>
+            <form action="<c:url value="/userMenu/pointDel"/>" class="pointDelFrom">
+              <input type="number"name="pointDel" id="pointDel" required>
             </form>
         </div>
         <div class="comment-btn">
-            <button class="close">취소</button>
-            <button>확인</button>
+            <button type="button" class="close">취소</button>
+            <button type="button" class="pointDel-btn">확인</button>
         </div>
 	</div>
 </div>
@@ -72,38 +72,16 @@
             <div class="panel-body">
             	<div class="user-point">
                 	현재 보유중인 포인트<br>
-                	23.000원
+                	${point.userPoint}원
               	</div>
-				<form action="/member/pointCharge" method="post" name="updatePoint" th:object="${member}">
-                	<input type="hidden" name="memberId" id="memberId" th:value="${member.memberId}">
-                	<input type="hidden" name="pointType" id="pointType" value="포인트 충전">
-                	<div class="form-check">
-                    	<input class="form-check-input" type="radio" id="10000" name="pointPoint"
-                        	th:value="10000" checked>
-                    	<label class="form-check-label" for="10000">
-                        	10,000p
-                    	</label>
-                	</div>
-                	<div class="form-check">
-                    	<input class="form-check-input" type="radio" name="pointPoint" id="50000"
-                        	th:value="50000">
-                    	<label class="form-check-label" for="50000">
-                        	50,000p
-                    	</label>
-                	</div>
-                	<div class="form-check">
-                    	<input class="form-check-input" type="radio" name="pointPoint" id="100000"
-                        	th:value="100000">
-                    	<label class="form-check-label" for="100000">
-                        	100,000p
-                    	</label>
-                	</div>
+				<form action="<c:url value="/userMenu/pointPay"/>"  class="pointPayFrom">
+					<input type="number" name="pointPay" id="pointPay" required>
 				</form>
 			</div>
 		</div>
         <div class="comment-btn">
-            <button class="close">취소</button>
-            <button>확인</button>
+            <button type="button" class="close">취소</button>
+            <button type="button" class="pointPay-btn">확인</button>
         </div>
 	</div>
 </div>
@@ -140,4 +118,29 @@
       closeCharge.addEventListener("click", function () {
         modalCharge.classList.add("hidden");
       });
+      
+      
+      
+  	$(function() {
+		$('.pointPay-btn').click(function() {
+			if ($('#pointPay').val() === '') {
+				alert('충전 값을 입력하세요');
+				return;
+			} else {
+				$('.pointPayFrom').submit();
+			}
+		});
+	});
+  	
+  	
+  	$(function() {
+		$('.pointDel-btn').click(function() {
+			if ($('#pointDel').val() === '') {
+				alert('환불 값을 입력하세요');
+				return;
+			} else {
+				$('.pointDelFrom').submit();
+			}
+		});
+	});
     </script>
