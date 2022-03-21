@@ -18,6 +18,7 @@ ADD (coupon_code varchar2(20) NOT NULL);
 ALTER TABLE CIA_COUPONS DROP PRIMARY KEY;
 */
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 import lombok.Getter;
@@ -34,9 +35,9 @@ public class CouponVO {
 	//쿠폰 할인 금액
 	private int couponDiscount;
 	//시작 사용 기간
-	private Date couponRegDate;
+	private Timestamp couponRegDate;
 	//끝나는 사용 기간
-	private Date couponEndDate;
+	private Timestamp couponEndDate;
 	//가게 이름
 	private String shopName;
 

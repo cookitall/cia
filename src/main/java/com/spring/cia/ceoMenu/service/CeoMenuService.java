@@ -57,6 +57,11 @@ public class CeoMenuService implements ICeoMenuService {
 	public List<CouponVO> getList() {
 		return mapper.getList();
 	}
+
+	@Override
+	public void deleteLine(String couponCode) {
+		mapper.deleteLine(couponCode);
+	}
 	
 
 	/*

@@ -16,6 +16,8 @@ public interface ICeoMenuService {
 	// 쿠폰 리스트
 	List<CouponVO> getList();
 
+	void deleteLine(String couponCode);
+
 	/*
 	 * couponList 끝
 	 */

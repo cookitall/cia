@@ -32,6 +32,12 @@
 		FROM cia_coupons
 	</select>
 	
+	  <delete id="deleteLine">
+  	DELETE FROM cia_coupons
+  	WHERE coupon_code = #{couponCode}
+  </delete>
+  
+	
 	<!-- couponList끝 -->
 	
 	<!-- menuList -->

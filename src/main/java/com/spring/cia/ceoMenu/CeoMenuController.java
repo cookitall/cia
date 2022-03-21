@@ -1,15 +1,13 @@
 package com.spring.cia.ceoMenu;
 
-import java.util.HashMap;
-
-import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.spring.cia.ceoMenu.service.ICeoMenuService;
@@ -26,35 +24,14 @@ public class CeoMenuController {
 	 * couponList
 	 */
 	@GetMapping("/couponList") 
-	public void getCouponList() {
+	public void getCouponList(Model model) {
 		System.out.println("쿠폰관리 Get 요청");
+		
+		List<CouponVO> list = null; 
+		list = service.getList();
+		model.addAttribute("couponList", list);
 	}
 	
-	//쿠폰생성 테스트 POST
-	@PostMapping("/test2")
-	public void test(HttpServletRequest request, Model model) {
-		System.out.println("test2로 Post 요청");
-		
-		String couponName = request.getParameter("couponName");
-		String couponRegDate = request.getParameter("couponRegDate");
-		String couponEndDate = request.getParameter("couponEndDate");
-		String couponTermPrice = request.getParameter("couponTermPrice");
-		String couponDiscount = request.getParameter("couponDiscount");
-		String couponRemain = request.getParameter("couponRemain");
-		
-		System.out.println("쿠폰 이름: " + couponName);
-		System.out.println("쿠폰 사용기한 : " + couponRegDate + "~" + couponEndDate);
-		System.out.println("쿠폰 최소금액: " + couponTermPrice);
-		System.out.println("쿠폰 할인금액: " + couponDiscount);
-		System.out.println("쿠폰 수량: " + couponRemain);
-		
-		model.addAttribute("cName", couponName);
-		model.addAttribute("cRDate", couponRegDate);
-		model.addAttribute("cEDate", couponEndDate);
-		model.addAttribute("cTPrice", couponTermPrice);
-		model.addAttribute("cDiscount", couponDiscount);
-		model.addAttribute("cRemain", couponRemain);
-	}
 	/*
 	 * couponList 끝
 	 */
@@ -62,6 +39,10 @@ public class CeoMenuController {
 	/*
 	 * menuList
 	 */
+	@GetMapping("/menuList") 
+	public void getMenuList() {
+		System.out.println("메뉴관리 Get 요청");
+	}
 	
 
 	/*
@@ -72,7 +53,10 @@ public class CeoMenuController {
 	/*
 	 * orderList
 	 */
-	
+	@GetMapping("/orderList") 
+	public void getOrderList() {
+		System.out.println("주문관리 Get 요청");
+	}
 
 	/*
 	 * orderList 끝
@@ -82,6 +66,10 @@ public class CeoMenuController {
 	/*
 	 * saleHistory
 	 */
+	@GetMapping("/saleHistory") 
+	public void getSaleHistory() {
+		System.out.println("매출내역 Get 요청");
+	}
 	
 	/*
 	 * saleHistory 끝
@@ -90,6 +78,10 @@ public class CeoMenuController {
 	/*
 	 * shopReviewList
 	 */
+	@GetMapping("/shopReviewList") 
+	public void getShopReviewList() {
+		System.out.println("리뷰관리 Get 요청");
+	}
 	
 	/*
 	 * shopReviewList 끝
