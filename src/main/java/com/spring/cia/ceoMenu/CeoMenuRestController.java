@@ -1,8 +1,7 @@
 package com.spring.cia.ceoMenu;
 
-import java.text.ParseException;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -41,8 +40,8 @@ public class CeoMenuRestController {
 
 		try {
 			//변환된 String 값을 Date로 parsing
-			Date tempRegDateToDate = simpleDateFormat.parse(tempRegDateToString);
-			Date tempEndDateToDate = simpleDateFormat.parse(tempEndDateToString);
+			Timestamp tempRegDateToDate = (Timestamp) simpleDateFormat.parse(tempRegDateToString);
+			Timestamp tempEndDateToDate = (Timestamp) simpleDateFormat.parse(tempEndDateToString);
 			//VO에 적용
 			couponVO.setCouponRegDate(tempRegDateToDate);
 			couponVO.setCouponEndDate(tempEndDateToDate);
@@ -62,11 +61,22 @@ public class CeoMenuRestController {
 		
 		List<CouponVO> list = null; 
 		list = service.getList();
-		model.addAttribute("couponList", list);		 
+		model.addAttribute("couponList", list);
 		
 		return result;
 	} 
 	
+	 @PostMapping("/deleteLine")
+	 @ResponseBody
+	  public void deleteLine(@RequestBody String couponCode, Model model) throws Exception {
+	    System.out.println(couponCode);
+	    service.deleteLine(couponCode);
+	    
+		List<CouponVO> list = null; 
+		list = service.getList();
+		model.addAttribute("couponList", list);
+
+	  }
 
 	/*
 	 * couponList 끝

@@ -14,6 +14,8 @@ public interface ICeoMenuMapper {
 
 	List<CouponVO> getList();
 
+	void deleteLine(String couponCode);
+
 	/*
 	 * couponList 끝
 	 */

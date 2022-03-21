@@ -43,6 +43,7 @@
 	<mybatis-spring:scan base-package="com.spring.cia.userInfo.mapper" />
 	<mybatis-spring:scan base-package="com.spring.cia.ceoMenu.mapper" />
 	<mybatis-spring:scan base-package="com.spring.cia.userMenu.mapper" />
+
 	<!-- 
 	<mybatis-spring:scan
 		base-package="com.spring.cia.shop.mapper" />
