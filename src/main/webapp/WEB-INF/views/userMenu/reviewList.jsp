@@ -38,7 +38,7 @@
 	                    </ul>
 	                </div>
 	                <div class="btn-wrap">
-	                  <a class="pink-btn" href="">삭제</a>
+	                  <a class="pink-btn" href="<c:url value='/userMenu/reviewDel?reviewNum=${review.reviewNum}'/>">삭제</a>
 	                </div>
 				</div>
 	            <div class="text-wrap">

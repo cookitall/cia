@@ -104,4 +104,10 @@ public class UserMenuController {
 		model.addAttribute("reviews", reviews);
 		model.addAttribute("replys", replys);
 	}
+	@GetMapping("/reviewDel")
+	public String reviewDel(int reviewNum) {
+		System.out.println("reviewDel 요총 GET");
+		service.reviewDel(reviewNum);
+		return "redirect:/userMenu/reviewList";
+	}
 }

@@ -22,7 +22,7 @@ public class CeoLoginSuccessHandler implements HandlerInterceptor {
 		
 		ModelMap mv = modelAndView.getModelMap();
 		CeoInfoVO vo = (CeoInfoVO) mv.get("ceo");
-		System.out.println("interceptor vo: " + vo);
+		
 		
 		if(vo != null) { 
 			System.out.println("로그인 성공 로직 동작!");

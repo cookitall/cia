@@ -2,7 +2,12 @@ package com.spring.cia.ceoMenu.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.spring.cia.command.CouponVO;
+import com.spring.cia.command.ReplyVO;
+import com.spring.cia.command.ReviewVO;
+import com.spring.cia.util.PageVO;
 
 public interface ICeoMenuService {
 
@@ -53,7 +58,13 @@ public interface ICeoMenuService {
 	/*
 	 * shopReviewList
 	 */
+	List<ReviewVO> reivewList(String shopName, PageVO pvo);
+	ReplyVO replyContent(int reviewNum);
+	int getReviewTotal(String shopName);
 	
+	void replyWrite(int writeReviewNum, String writeShopName, String writeReplyContent);
+	void replyDelete(int replyNum, int reviewNum);
+	void replyModify(int replyNum, String replyContent);
 	/*
 	 * shopReviewList 끝
 	 */

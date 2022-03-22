@@ -69,5 +69,8 @@ public class UserMenuSerivce implements IUserMenuService {
 	public ReplyVO replyContent(int reviewNum) {
 		return mapper.replyContent(reviewNum);
 	}
+	public void reviewDel(int reviewNum) {
+		mapper.reviewDel(reviewNum);
+	}
 
 }

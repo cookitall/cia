@@ -7,11 +7,11 @@
 <aside id="aside">
 	<div class="aside-title">판매자 메뉴</div>
 	<ul>
-		<li>주문현황</li>
-		<li>매출내역</li>
-		<li>메뉴관리</li>
-		<li>리뷰관리</li>
-		<li>쿠폰관리</li>
-		<li>정보관리</li>
+		<li><a href="<c:url value='/ceoMenu/orderList'/>">주문현황</a></li>
+		<li><a href="<c:url value='/ceoMenu/saleHistory'/>">매출내역</a></li>
+		<li><a href="<c:url value='/ceoMenu/menuList'/>">메뉴관리</a></li>
+		<li><a href="<c:url value='/ceoMenu/shopReviewList'/>">리뷰관리</a></li>
+		<li><a href="<c:url value='/ceoMenu/couponList'/>">쿠폰관리</a></li>
+		<li><a href="<c:url value='/ceoInfo/ceoModify'/>">정보관리</a></li>
 	</ul>
 </aside>

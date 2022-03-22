@@ -12,6 +12,8 @@ CREATE TABLE cia_review
 	review_date date DEFAULT sysdate NOT NULL,
 	PRIMARY KEY (review_num)
 );
+ALTER TABLE cia_review
+ADD(review_reply NUMBER(5) NOT NULL);
 CREATE SEQUENCE review_seq
 
     START WITH 1
@@ -44,4 +46,5 @@ public class ReviewVO {
 	private String reviewContent;
 	private int reviewStar;
 	private Timestamp reviewDate;
+	private int reviewReply;     //리플이 있으면 1, 리플이 없으면 0
 }

@@ -6,17 +6,7 @@
 <%@ include file="../include/header.jsp"%>
 <title>사업자 정보관리</title>
 <div class="ceo-page">
-	<aside id="aside">
-		<div class="aside-title">판매자 메뉴</div>
-		<ul>
-			<li>주문현황</li>
-			<li>매출내역</li>
-			<li>메뉴관리</li>
-			<li>리뷰관리</li>
-			<li>쿠폰관리</li>
-			<li>정보관리</li>
-		</ul>
-	</aside>
+<%@ include file="../include/aside.jsp"%>
    <div class="content gray">
 		<section class="join-main">
 			<!-- 로고 -->

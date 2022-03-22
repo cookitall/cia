@@ -34,8 +34,9 @@ public interface IUserMenuMapper {
 
 	
 	// reviewList
-	List<ReviewVO> reivewList(String userId, @Param("pvo")PageVO pvo);
+	List<ReviewVO> reivewList(@Param("userId")String userId, @Param("pvo")PageVO pvo);
 	ReplyVO replyContent(int reviewNum);
+	void reviewDel(int reviewNum);
 	//페이징
 	int getReviewTotal(String userId);
 

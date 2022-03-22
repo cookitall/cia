@@ -166,4 +166,9 @@
   	WHERE review_num = #{reviewNum}
   </select>
   
+  <delete id="reviewDel">
+  	DELETE cia_review
+  	WHERE review_num = #{reviewNum}
+  </delete>
+  
   </mapper>

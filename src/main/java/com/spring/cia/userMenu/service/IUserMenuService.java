@@ -32,6 +32,7 @@ public interface IUserMenuService {
 	// reviewList
 	List<ReviewVO> reivewList(String userId, PageVO pvo);
 	ReplyVO replyContent(int reviewNum);
+	void reviewDel(int reviewNum);
 	//페이징
 	int getReviewTotal(String userId);
 }

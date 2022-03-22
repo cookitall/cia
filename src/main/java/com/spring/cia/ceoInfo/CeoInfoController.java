@@ -37,9 +37,7 @@ public class CeoInfoController {
 	@PostMapping("ceoLogin")
 	public String ceoLogin(String ceoId, String ceoPw, Model model) {
 		System.out.println("ceoLogin 요청 POST");
-		System.out.println("파라미터 확인" + ceoId + ceoPw);
 		CeoInfoVO vo = service.ceoLogin(ceoId, ceoPw);
-		System.out.println(vo);
 		model.addAttribute("ceo", vo);
 		return "redirect:/";
 	}
