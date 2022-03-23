@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.spring.cia.shop.mapper.IShopMapper">
+
+	<resultMap type="com.spring.cia.command.ShopVO" id="ShopMap">
+		<!-- cia_shop -->
+		<id property="shopName" column="shop_name" />
+		<result property="shopCategory" column="shop_category" />
+		<result property="shopInfo" column="shop_info" />
+		<result property="shopNum" column="shop_num" />
+		<result property="shopAddr1" column="shop_addr1" />
+		<result property="shopAddr2" column="shop_addr2" />
+		<result property="deliveryPrice" column="delivery_price" />
+		<result property="avgStar" column="avg_star" />
+		<result property="reviewCount" column="review_count" />
+		<result property="replyCount" column="reply_count" />
+	</resultMap>
+	
+	<!-- <sql id="order">
+		<if test="condition == 'orderQuantity'">
+			WHERE title LIKE '%'||#{keyword}||'%'
+		</if>
+		<if test="condition == 'starPoint'">
+			WHERE content LIKE '%'||#{keyword}||'%'
+		</if>
+		<if test="condition == 'distance'">
+			WHERE writer LIKE '%'||#{keyword}||'%'
+		</if>
+	</sql> -->
+	
+	<select id="getShopList" resultMap="ShopMap">
+		SELECT * FROM(
+			SELECT ROWNUM AS rn, tbl.* FROM(
+		        SELECT *
+		        FROM cia_shop cs
+		        LEFT OUTER JOIN (
+		            SELECT
+		                shop_name,
+		                COUNT(review_num) "review_count",
+		                AVG(review_star) "avg_star"
+		            FROM cia_review
+		            group by shop_name
+		        ) cr
+		        ON cs.shop_name = cr.shop_name
+		        LEFT OUTER JOIN (
+		            SELECT
+		                shop_name,
+		                COUNT(review_num) "reply_count"
+		            FROM cia_review_reply
+		            group by shop_name
+		        ) crr
+		        ON cs.shop_name = crr.shop_name
+		        WHERE cs.shop_category = #{category}
+		    ) tbl
+		)
+		<![CDATA[
+		WHERE rn > (#{pageNum} - 1) * #{countPerPage}
+		AND rn <= #{pageNum} * #{countPerPage}
+		]]>
+	</select>
+	
+	<select id="getTotal" resultType="int">
+		SELECT COUNT(*)
+		FROM cia_Shop
+		WHERE shop_category = #{category}
+	</select>
+	
+	<select id="getShopInfo" resultMap="ShopMap">
+		SELECT *
+		FROM cia_shop cs
+		LEFT OUTER JOIN (
+            SELECT
+                shop_name,
+                AVG(review_star) "avg_star"
+            FROM cia_review
+            WHERE shop_name = #{shopName}
+            group by shop_name
+        ) cr
+        ON cs.shop_name = cr.shop_name
+		WHERE cs.shop_name = #{shopName}
+	</select>
+	
+	<select id="getShopReviewList">
+	</select>
+	
+	<select id="getShopMenuList">
+	</select>
+	
+	
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

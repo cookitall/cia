@@ -23,16 +23,15 @@
 </nav>
  <div class="content-wrap">
         <section class="store-container">
-          <div class="store-title">잭슨피자 xx점</div>
+          <div class="store-title">${shopInfo.shopName}</div>
           <div class="store-wrap">
             <img class="store-logo" src="../img/chiken.jpg" alt="" />
             <div class="store-info">
-              <span class="store-intr"
-                >모두에게 저렴하고 맛있는 피자 잭슨피자 신촌점입니다.</span
-              >
+              <span class="store-intr">${shopInfo.shopInfo}.</span>
               <br />
-              <span class="star">★★★★★ 4.8</span> <br />
-              <span class="min-price">최소 주문 금액 19,800원</span> <br />
+              <span class="star">★★★★★ ${shopInfo.avgStar}</span> <br />
+              <span class="delivery-price">배달비 ${shopInfo.deliveryPrice}원</span> <br />
+              <!-- <span class="min-price">최소 주문 금액 19,800원</span> <br /> -->
             </div>
           </div>
 
@@ -40,42 +39,50 @@
             <button class="store-info-btn">정보</button>
             <button class="store-review-btn">리뷰</button>
           </div>
-
+          <div class="info-wrap" style="display: none">
+          	가게 전화번호 : ${shopInfo.shopNum}<br>
+          	가게 주소 : ${shopInfo.shopAddr1}<br>
+          	${shopInfo.shopAddr2}<br>
+          </div>
+          
+          <div class="review-wrap" style="display: none">
+	            <!-- 반복문 요소 -->
+	          <div class="review">
+	          	<div class="user">
+	            	<div class="buy-info">
+	                    <div class="star-time">⭐⭐⭐⭐⭐ 2021년 12월 13일</div>
+	                    <ul>
+	                    	<li class="menu">마라탕</li>
+	                    	<li class="menu">마라샹궈</li>
+	                    </ul>
+	                </div>
+				</div>
+	            <div class="text-wrap">
+	            	<textarea name="" cols="60" rows="2" readonly>맛있게 잘 먹었습니다~
+					</textarea>
+	           </div>
+	           <div class="ceo">
+	           		<div class="text-wrap">
+	                	<textarea name="" cols="60" rows="2" readonly>손오공 마라탕: 주문해 주셔서 감사합니다
+					  	</textarea>
+	                </div>
+	            </div>
+	            </div>
+			</div>
+			
           <!-- 메뉴 상세 리스트 -->
           <div class="menu-container">
             <ul>
-              <li>
-                <div class="menu-item">
-                  <span class="menu-title">하와이안 피자 </span>
-                  <p class="menu-info">간장 양념을 바른 달콤한 치킨입니다.</p>
-                  <span class="menu-price">12,000원</span>
-                </div>
-                <img class="menu-img" src="../img/chiken.jpg" alt="" />
-              </li>
-              <li>
-                <div class="menu-item">
-                  <span class="menu-title">하와이안 피자 </span>
-                  <p class="menu-info">간장 양념을 바른 달콤한 치킨입니다.</p>
-                  <span class="menu-price">12,000원</span>
-                </div>
-                <img class="menu-img" src="../img/chiken.jpg" alt="" />
-              </li>
-              <li>
-                <div class="menu-item">
-                  <span class="menu-title">하와이안 피자 </span>
-                  <p class="menu-info">간장 양념을 바른 달콤한 치킨입니다.</p>
-                  <span class="menu-price">12,000원</span>
-                </div>
-                <img class="menu-img" src="../img/chiken.jpg" alt="" />
-              </li>
-              <li>
-                <div class="menu-item">
-                  <span class="menu-title">하와이안 피자 </span>
-                  <p class="menu-info">간장 양념을 바른 달콤한 치킨입니다.</p>
-                  <span class="menu-price">12,000원</span>
-                </div>
-                <img class="menu-img" src="../img/chiken.jpg" alt="" />
-              </li>
+            	<c:forEach var="vo" items="${MenuList}">
+	              <li>
+	                <div class="menu-item">
+	                  <span class="menu-title"></span>
+	                  <p class="menu-info"></p>
+	                  <span class="menu-price"></span>
+	                </div>
+	                <img class="menu-img" src="../img/chiken.jpg" alt="" />
+	              </li>
+              	</c:forEach>
             </ul>
           </div>
         </section>
@@ -134,6 +141,29 @@
           <button type="button" class="order-btn" onclick="<c:url value='/shop/order'/>">주문하기</button>
         </section>
       </div>
-
+	
+<script>
+	
+	const $infoBtn = document.querySelector('.store-info-btn');
+	const $reviewBtn = document.querySelector('.store-review-btn')
+	
+	const $infoWrap = document.querySelector('.info-wrap');
+	const $reviewWrap = document.querySelector('.review-wrap');
+	
+	$infoBtn.addEventListener('click', function(e){
+		if($infoWrap.style.display = "none"){
+			$infoWrap.style.display = "block";
+			$reviewWrap.style.display = "none";
+		}
+	});
+	
+	$reviewBtn.addEventListener('click', function(e){
+		if($reviewWrap.style.display = "none"){
+			$reviewWrap.style.display = "block";
+			$infoWrap.style.display = "none";
+		}
+	});
+	
+</script>
 
 <%@ include file="../include/footer.jsp"%>

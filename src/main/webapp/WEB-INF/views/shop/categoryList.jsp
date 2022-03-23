@@ -19,113 +19,28 @@
 </nav>
 
 <section class="category-container">
-
-	<div class="category-store" id="id"><!-- id 역시 el태그 $중괄호shopId중괄호 -->
-	<!-- '' 안에 감싸진 텍스트는 EL형식으로 불러올 것임 $중괄호 -->  
-	<!-- 이미지 링크도 /img/$중괄호열기category중괄호닫기 로 하면 됨 -->	
-		<img class="store-logo" src="<c:url value='/img/chicken.png' />" alt="">
-		<div class="store-info">
-			<span class="store-title">'교촌치킨'</span>
-			<div class="store-etc">
-				<div class="delivery-fee">배달비 '5000'원</div>
-				<span class="star">★ '4.8'</span> | 
-				<span class="review">리뷰 '162' 개</span> | 
-				<span class="store-comment">사장님 댓글 '102'</span>
-			</div>
-		</div>
-	</div>
-
-	<div class="category-store" id="id">
-		<img class="store-logo" src="<c:url value='/img/chicken.png' />" alt="">
-		<div class="store-info">
-			<span class="store-title">'교촌치킨'</span>
-			<div class="store-etc">
-				<div class="delivery-fee">배달비 '5000'원</div>
-				<span class="star">★ '4.8'</span> | 
-				<span class="review">리뷰 '162' 개</span> | 
-				<span class="store-comment">사장님 댓글 '102'</span>
-			</div>
-		</div>
-	</div>
 	
-	<div class="category-store" id="id">
-		<img class="store-logo" src="<c:url value='/img/chicken.png' />" alt="">
-		<div class="store-info">
-			<span class="store-title">'교촌치킨'</span>
-			<div class="store-etc">
-				<div class="delivery-fee">배달비 '5000'원</div>
-				<span class="star">★ '4.8'</span> | 
-				<span class="review">리뷰 '162' 개</span> | 
-				<span class="store-comment">사장님 댓글 '102'</span>
-			</div>
-		</div>
-	</div>
-
-	<div class="category-store" id="id">
-		<img class="store-logo" src="<c:url value='/img/chicken.png' />" alt="">
-		<div class="store-info">
-			<span class="store-title">'교촌치킨'</span>
-			<div class="store-etc">
-				<div class="delivery-fee">배달비 '5000'원</div>
-				<span class="star">★ '4.8'</span> | 
-				<span class="review">리뷰 '162' 개</span> | 
-				<span class="store-comment">사장님 댓글 '102'</span>
-			</div>
-		</div>
-	</div>
+	<!-- <div>
+		<select class="orderBy" name="orderBy">
+			<option value="orderQuantity">주문량 많은순</option>
+			<option value="orderQuantity">별점순</option>
+			<option value="orderQuantity">거리 가까운 순</option>
+		</select>
+	</div> -->
 	
-	<div class="category-store" id="id">
-		<img class="store-logo" src="<c:url value='/img/chicken.png' />" alt="">
-		<div class="store-info">
-			<span class="store-title">'교촌치킨'</span>
-			<div class="store-etc">
-				<div class="delivery-fee">배달비 '5000'원</div>
-				<span class="star">★ '4.8'</span> | 
-				<span class="review">리뷰 '162' 개</span> | 
-				<span class="store-comment">사장님 댓글 '102'</span>
+	<c:forEach var="vo" items="${shopList}">
+		<div class="category-store" id="${vo.shopName}">
+			<img class="store-logo" src="<c:url value='/img/chicken.png' />" alt="">
+			<div class="store-info">
+				<span class="store-title">${vo.shopName}</span>
+				<div class="store-etc">
+					<span class="star">★ ${vo.avgStar}</span> <br> 
+					<span class="review">리뷰 ${vo.reviewCount}개</span> | 
+					<span class="store-comment">사장님 댓글 ${vo.replyCount}개</span>
+				</div>
 			</div>
 		</div>
-	</div>
-	
-	<div class="category-store" id="id">
-		<img class="store-logo" src="<c:url value='/img/chicken.png' />" alt="">
-		<div class="store-info">
-			<span class="store-title">'교촌치킨'</span>
-			<div class="store-etc">
-				<div class="delivery-fee">배달비 '5000'원</div>
-				<span class="star">★ '4.8'</span> | 
-				<span class="review">리뷰 '162' 개</span> | 
-				<span class="store-comment">사장님 댓글 '102'</span>
-			</div>
-		</div>
-	</div>
-	
-	<div class="category-store" id="id">
-		<img class="store-logo" src="<c:url value='/img/chicken.png' />" alt="">
-		<div class="store-info">
-			<span class="store-title">'교촌치킨'</span>
-			<div class="store-etc">
-				<div class="delivery-fee">배달비 '5000'원</div>
-				<span class="star">★ '4.8'</span> | 
-				<span class="review">리뷰 '162' 개</span> | 
-				<span class="store-comment">사장님 댓글 '102'</span>
-			</div>
-		</div>
-	</div>
-	
-	<div class="category-store" id="id">
-		<img class="store-logo" src="<c:url value='/img/chicken.png' />" alt="">
-		<div class="store-info">
-			<span class="store-title">'교촌치킨'</span>
-			<div class="store-etc">
-				<div class="delivery-fee">배달비 '5000'원</div>
-				<span class="star">★ '4.8'</span> | 
-				<span class="review">리뷰 '162' 개</span> | 
-				<span class="store-comment">사장님 댓글 '102'</span>
-			</div>
-		</div>
-	</div>
-
+	</c:forEach>
 </section>
 
 
@@ -165,13 +80,15 @@
 	const $scc = document.querySelector('.category-container');
 	const $cs = document.querySelector('.category-store');
 	$scc.addEventListener('click', function(e){
-	      if(!e.target.matches('$scc > $cs')){
-	          return;
-	      }
-	      console.log(e.target.id);
-	      const $id = e.target.id;
-	      location.href ="/shop/shopContent?shopId=" + $id;
-	  });
+		if(!e.target.matches('.category-container > .category-store *')){
+			return;
+		};
+		let $tag = e.target;
+		for(;$tag.className != 'category-store' ; $tag=$tag.parentElement);
+		console.log($tag + '클릭 이벤트 발생')
+	    location.href ="<c:url value='/shop/storeContent?shopName=' />" + $tag.id;
+	});
+	
 </script>
 
 
