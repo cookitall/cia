@@ -5,14 +5,13 @@ import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,10 +20,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.cia.ceoMenu.service.ICeoMenuService;
+import com.spring.cia.command.CeoInfoVO;
 import com.spring.cia.command.CouponVO;
+import com.spring.cia.command.OrderVO;
+import com.spring.cia.command.ReplyVO;
+import com.spring.cia.command.ReviewVO;
+import com.spring.cia.util.PageCreator;
+import com.spring.cia.util.PageVO;
 
 @Controller
 @RequestMapping("/ceoMenu/*")
@@ -145,26 +149,70 @@ public class CeoMenuController {
 	 * orderList 끝
 	 */
 
+	
+	
 	/*
 	 * saleHistory
 	 */
-	@GetMapping("/saleHistory")
+	@GetMapping("/saleHistory") 
 	public void getSaleHistory() {
 		System.out.println("매출내역 Get 요청");
 	}
-
+	@PostMapping("/saleHistory")
+	public void monthHistory(Model model, HttpSession session, String daySta, String dayEnd) {
+		System.out.println("saleHistory POST 요청");
+		String shopName = ((CeoInfoVO)session.getAttribute("ceoLogin")).getShopName();
+		OrderVO order = service.saleHis(shopName, daySta, dayEnd);
+		
+		model.addAttribute("order", order);
+		model.addAttribute("daySta", daySta);
+		model.addAttribute("dayEnd", dayEnd);
+	}
+	
 	/*
 	 * saleHistory 끝
 	 */
-
+	
 	/*
 	 * shopReviewList
 	 */
-	@GetMapping("/shopReviewList")
-	public void getShopReviewList() {
+	@GetMapping("/shopReviewList") 
+	public void getShopReviewList(HttpSession session, PageVO pvo, Model model) {
 		System.out.println("리뷰관리 Get 요청");
+		String shopName = ((CeoInfoVO)session.getAttribute("ceoLogin")).getShopName();
+		List<ReviewVO> reviews = service.reivewList(shopName, pvo);
+		List<ReplyVO> replys = new ArrayList<ReplyVO>();
+		for(ReviewVO vo : reviews) {
+			ReplyVO rvo = service.replyContent(vo.getReviewNum());
+			replys.add(rvo);
+		}
+		PageCreator pc = new PageCreator();
+		pc.setPaging(pvo);
+		pc.setArticleTotalCount(service.getReviewTotal(shopName));
+		
+		model.addAttribute("pc", pc);
+		model.addAttribute("reviews", reviews);
+		model.addAttribute("replys", replys);
 	}
-
+	@GetMapping("/replyWrite")
+	public String replyWrite(int writeReviewNum, String writeShopName, String writeReplyContent) {
+		System.out.println("reviewWrite GET");
+		service.replyWrite(writeReviewNum, writeShopName, writeReplyContent);	
+		return "redirect:/ceoMenu/shopReviewList";
+	}
+	@GetMapping("/replyDelete")
+	public String replyDelete(int replyNum, int reviewNum) {
+		System.out.println("reviewDelete GET");
+		service.replyDelete(replyNum, reviewNum);
+		return "redirect:/ceoMenu/shopReviewList";
+	}
+	@GetMapping("/replyModify")
+	public String replyModify(int replyNum, String replyContent) {
+		System.out.println("replyModi GET");
+		service.replyModify(replyNum, replyContent);
+		return "redirect:/ceoMenu/shopReviewList";
+	}
+	
 	/*
 	 * shopReviewList 끝
 	 */

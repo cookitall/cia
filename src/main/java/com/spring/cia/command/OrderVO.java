@@ -33,11 +33,16 @@ import lombok.ToString;
 @ToString
 public class OrderVO {
 	
+	
 	private int orderNum;
 	private Timestamp orderDate;
 	private String shopName;
 	private String userId;
 	private String payway;
 	
+	
+	private int hisCount;
 	private OrderDetailVO odvo;
+	private PaymentVO pay;
+	private DeliveryVO deli;
 }
