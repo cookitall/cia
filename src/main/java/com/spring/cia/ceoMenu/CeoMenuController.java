@@ -1,45 +1,50 @@
 package com.spring.cia.ceoMenu;
 
-import java.text.SimpleDateFormat;
+import java.io.IOException;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
-
-import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.cia.ceoMenu.service.ICeoMenuService;
-import com.spring.cia.command.CeoInfoVO;
 import com.spring.cia.command.CouponVO;
-import com.spring.cia.command.ReplyVO;
-import com.spring.cia.command.ReviewVO;
-import com.spring.cia.util.PageCreator;
-import com.spring.cia.util.PageVO;
 
 @Controller
 @RequestMapping("/ceoMenu/*")
 public class CeoMenuController {
-	
+
 	@Autowired
 	private ICeoMenuService service;
-	
+
 	/*
 	 * couponList
 	 */
-	@GetMapping("/couponList") 
+	@GetMapping("/couponList")
 	public void getCouponList(Model model) {
 		System.out.println("쿠폰관리 Get 요청");
-		
-		List<CouponVO> list = null; 
+
+		List<CouponVO> list = null;
 		list = service.getList();
 		model.addAttribute("couponList", list);
 	}
-	
+
 	/*
 	 * couponList 끝
 	 */
@@ -47,21 +52,91 @@ public class CeoMenuController {
 	/*
 	 * menuList
 	 */
-	@GetMapping("/menuList") 
-	public void getMenuList() {
-		System.out.println("메뉴관리 Get 요청");
+//	@GetMapping("/menuList")
+//	public ModelAndView getMenuList() {
+//		List<String> paramList = new ArrayList<String>();
+//		ModelAndView model = new ModelAndView("views/view2");
+//
+////		List<Map<String, Object>> list = dao.getByteImageList();
+//		model.addObject("list", list);
+//
+//		Iterator<Map<String, Object>> itr = list.iterator();
+//
+//		while (itr.hasNext()) {
+//
+//			Map<String, Object> element = (Map<String, Object>) itr.next();
+//			byte[] encoded = org.apache.commons.codec.binary.Base64.encodeBase64((byte[]) element.get("img"));
+//			String encodedString = new String(encoded);
+//			paramList.add(encodedString);
+//			model.addObject("image", paramList);
+//
+//		}
+//		return model;
+//
+//	}
+	
+	/**
+	 * 임의의 뷰페이지
+	 * @return
+	 */
+	@RequestMapping(value="/test")
+	public void test() {
+	}
+	     
+	/**
+	 * 이미지태그의 src 컨트롤러
+	 * @return
+	 * @throws SQLException 
+	 */
+	@RequestMapping(value="/getByteImage")
+	public ResponseEntity<byte[]> getByteImage() throws SQLException {
+	   Map<String, Object> map = service.getByteImage();
+	   System.out.println(map);
+	   System.out.println(map.get("MENUIMAGE").getClass().getName());
+	   Blob temp = (Blob) map.get("MENUIMAGE");
+	   
+	   byte[] imageContent = temp.getBytes(1, (int) temp.length());
+
+	   System.out.println(imageContent);    
+       return new ResponseEntity<byte[]>(imageContent, HttpStatus.OK);
 	}
 	
+	//메뉴 등록 작업
+	@PostMapping("/menuList/menuSubmit")
+	public String postMenuSubmit(MultipartHttpServletRequest req) throws IOException {
+		String menuName = req.getParameter("menuName");
+		Integer menuPrice = Integer.parseInt(req.getParameter("menuPrice"));
+		MultipartFile menuImage = req.getFile("menuImage");
+		String menuInfo = req.getParameter("menuInfo");
+
+		try {
+
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("menuName", menuName);
+			map.put("menuPrice", menuPrice);
+			map.put("menuInfo", menuInfo);
+			map.put("menuOpen", "open");
+			map.put("shopName", "쿡잇올");
+			map.put("menuImage", menuImage.getBytes());
+			service.insertMenu(map);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+		// int 성공여부 check
+
+		return "ceoMenu/menuList";
+	}
 
 	/*
 	 * menuList 끝
 	 */
-	
 
 	/*
 	 * orderList
 	 */
-	@GetMapping("/orderList") 
+	@GetMapping("/orderList")
 	public void getOrderList() {
 		System.out.println("주문관리 Get 요청");
 	}
@@ -69,63 +144,29 @@ public class CeoMenuController {
 	/*
 	 * orderList 끝
 	 */
-	
 
 	/*
 	 * saleHistory
 	 */
-	@GetMapping("/saleHistory") 
+	@GetMapping("/saleHistory")
 	public void getSaleHistory() {
 		System.out.println("매출내역 Get 요청");
 	}
-	
+
 	/*
 	 * saleHistory 끝
 	 */
-	
+
 	/*
 	 * shopReviewList
 	 */
-	@GetMapping("/shopReviewList") 
-	public void getShopReviewList(HttpSession session, PageVO pvo, Model model) {
+	@GetMapping("/shopReviewList")
+	public void getShopReviewList() {
 		System.out.println("리뷰관리 Get 요청");
-		String shopName = ((CeoInfoVO)session.getAttribute("ceoLogin")).getShopName();
-		List<ReviewVO> reviews = service.reivewList(shopName, pvo);
-		List<ReplyVO> replys = new ArrayList<ReplyVO>();
-		for(ReviewVO vo : reviews) {
-			ReplyVO rvo = service.replyContent(vo.getReviewNum());
-			replys.add(rvo);
-		}
-		PageCreator pc = new PageCreator();
-		pc.setPaging(pvo);
-		pc.setArticleTotalCount(service.getReviewTotal(shopName));
-		
-		model.addAttribute("pc", pc);
-		model.addAttribute("reviews", reviews);
-		model.addAttribute("replys", replys);
 	}
-	@GetMapping("/replyWrite")
-	public String replyWrite(int writeReviewNum, String writeShopName, String writeReplyContent) {
-		System.out.println("reviewWrite GET");
-		service.replyWrite(writeReviewNum, writeShopName, writeReplyContent);	
-		return "redirect:/ceoMenu/shopReviewList";
-	}
-	@GetMapping("/replyDelete")
-	public String replyDelete(int replyNum, int reviewNum) {
-		System.out.println("reviewDelete GET");
-		service.replyDelete(replyNum, reviewNum);
-		return "redirect:/ceoMenu/shopReviewList";
-	}
-	@GetMapping("/replyModify")
-	public String replyModify(int replyNum, String replyContent) {
-		System.out.println("replyModi GET");
-		service.replyModify(replyNum, replyContent);
-		return "redirect:/ceoMenu/shopReviewList";
-	}
-	
+
 	/*
 	 * shopReviewList 끝
 	 */
-	
 
 }

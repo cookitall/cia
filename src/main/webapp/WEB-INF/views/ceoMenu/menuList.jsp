@@ -31,9 +31,10 @@
 					<td class="menu-img"><img src="../img/chiken.jpg" alt="" /></td>
 					<td class="menu-name">후라이드 치킨</td>
 					<td class="menu-price">17,000원</td>
-					<td class="menu-info"><textarea name="" id="" cols="60"
-							rows="3">
-						바삭하게 튀겨서 맛이 있는 호식이의 자랑 후라이드 치킨입니다</textarea></td>
+					<td class="menu-info">
+					<textarea name="" id="" cols="60"
+							rows="3">바삭하게 튀겨서 맛이 있는 호식이의 자랑 후라이드 치킨입니다</textarea>
+					</td>
 					<td class="menu-btn">
 						<button class="for-sail-btn">판매</button>
 						<button class="sold-out-btn">매진</button> <br />
@@ -47,27 +48,27 @@
 		<!-- 메뉴 container end -->
 		<div class="content-title">메뉴추가</div>
 		<div class="add-menu">
-			<form class="add-form" action="">
+			<form class="add-form" action="menuList/menuSubmit" method="POST" enctype="multipart/form-data">
 				
 				<label for="img">이미지</label> 
-				<input name="img" type="file" accept="image/jpeg, image/jpg, image/png" onchange="readURL(this);" required /> 
+				<input class="menu-image" name="menuImage" type="file" accept="image/jpeg, image/jpg, image/png" required /> 
 				<br /> 
 				
 				<label for="name">이름</label> 
-				<input name="name" type="text" required /> 
+				<input class="menu-name" name="menuName" type="text" required /> 
 				<br /> 
 				
 				<label for="price">가격</label> 
-				<input name="price" type="number" min="1000" required /> 
+				<input class="menu-price" name="menuPrice" type="number" min="1000" required /> 
 				<br /> 
 					
 				<label for="info">정보</label>
 				<br />
-				<textarea name="info" id="" cols="50" rows="4" required></textarea>
+				<textarea class="menu-info" name="menuInfo" id="" cols="50" rows="4" required></textarea>
 				<br />
 				
 				<input type="reset" value="취소" /> 
-				<input type="submit" value="등록하기" />
+				<input type="submit" class="menu-submit-btn" value="등록하기"/>
 			
 			</form>
 			<div class="menu-img">
@@ -118,7 +119,10 @@
 
 <%@ include file="../include/footer.jsp"%>
 <script>
+
+	
       // 이미지 미리보기
+      /* 
       function readURL(input) {
         if (input.files && input.files[0]) {
           var reader = new FileReader();
@@ -130,6 +134,7 @@
           document.getElementById("preview").src = "";
         }
       }
+      */
       //이미지 미리보기 end
 
       // modal 스크립트

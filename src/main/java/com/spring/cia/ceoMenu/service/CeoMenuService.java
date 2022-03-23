@@ -1,17 +1,14 @@
 package com.spring.cia.ceoMenu.service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.cia.ceoMenu.mapper.ICeoMenuMapper;
 import com.spring.cia.command.CouponVO;
-import com.spring.cia.command.ReplyVO;
-import com.spring.cia.command.ReviewVO;
-import com.spring.cia.util.PageVO;
 
 @Service
 public class CeoMenuService implements ICeoMenuService {
@@ -66,7 +63,8 @@ public class CeoMenuService implements ICeoMenuService {
 	public void deleteLine(String couponCode) {
 		mapper.deleteLine(couponCode);
 	}
-	
+
+
 
 	/*
 	 * couponList 끝
@@ -75,6 +73,17 @@ public class CeoMenuService implements ICeoMenuService {
 	/*
 	 * menuList
 	 */
+	@Override
+	public int insertMenu(Map<String, Object> map) {
+		System.out.println(map.toString());
+		
+		return mapper.insertMenu(map);
+	}
+
+	@Override
+	public Map<String, Object> getByteImage() {
+		return mapper.getByteImage();
+	}
 	
 
 	/*
@@ -103,28 +112,7 @@ public class CeoMenuService implements ICeoMenuService {
 	/*
 	 * shopReviewList
 	 */
-	public List<ReviewVO> reivewList(@Param("shopName")String shopName, @Param("pvo")PageVO pvo){
-		return mapper.reivewList(shopName, pvo);
-	}
-	public int getReviewTotal(String shopName) {
-		return mapper.getReviewTotal(shopName);
-	}
 	
-	public ReplyVO replyContent(int reviewNum) {
-		return mapper.replyContent(reviewNum);
-	}
-	
-	public void replyWrite(int writeReviewNum, String writeShopName, String writeReplyContent) {
-		mapper.replyWrite(writeReviewNum, writeShopName, writeReplyContent);
-		mapper.reviewReply(writeReviewNum);
-	}
-	public void replyDelete(int replyNum, int reviewNum) {
-		mapper.replyDelete(replyNum);
-		mapper.revewiReplyDel(reviewNum);
-	}
-	public void replyModify(int replyNum, String replyContent) {
-		mapper.replyModify(replyNum, replyContent);
-	}
 	/*
 	 * shopReviewList 끝
 	 */
