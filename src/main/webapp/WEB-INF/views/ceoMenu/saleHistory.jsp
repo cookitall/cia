@@ -15,14 +15,14 @@
               <h2>판매내역</h2>
               <h5>*배달 완료건</h5>
 
-           
- 
+       
+
               <div class="day-period">
-                <h4>매출 내역 검색</h4>
+                     <h4>매출 내역 검색</h4>
                 <form action="#" method="post">
                   <input name="daySta" id="daySta" type="date" max="9999-12-31"/>
                   ~
-                  <input name="dayEnd" id="dayEnd" type="date" max="9999-12-31"/>
+                    <input name="dayEnd" id="dayEnd" type="date" max="9999-12-31"/>
                   <button type="submit">조회</button>
                 </form>
                 <table>
@@ -36,7 +36,7 @@
                   </tr>
 
                   <tr>
-                    <td>${daySta} ~ ${dayEnd}</td>
+               <td>${daySta} ~ ${dayEnd}</td>
                     <td>${order.hisCount}</td>
                     <td>${order.pay.originalPrice}</td>
                     <td>${order.pay.couponDiscount}</td>

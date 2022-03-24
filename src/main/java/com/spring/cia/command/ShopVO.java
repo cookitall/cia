@@ -29,13 +29,9 @@ public class ShopVO {
 	private String shopName;
 	private String shopCategory;
 	private String shopInfo;
-	private int shopNum;
+	private String shopNum;
 	private String shopAddr1;
 	private String shopAddr2;
-	private int deliveryPrice;	
-	
-	private double avgStar;
-	private int reviewCount;
-	private int replyCount;
+	private int deliveryPrice;
 
 }
