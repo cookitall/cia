@@ -23,6 +23,13 @@ public class ShopController {
 	public void terms() {
 		System.out.println("terms(fotter) 페이지 이동");
 	}
+	@GetMapping("/shopInfo")
+	public void shopInfo() {
+		System.out.println("shopInfo 이동");
+	}
+	//footer 이동 끝
+	
+	
 	
 	//가게 목록 화면
 	@GetMapping("/categoryList")

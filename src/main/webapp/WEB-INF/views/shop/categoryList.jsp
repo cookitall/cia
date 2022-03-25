@@ -30,7 +30,7 @@
 	
 	<c:forEach var="vo" items="${shopList}">
 		<div class="category-store" id="${vo.shopName}">
-			<img class="store-logo" src="<c:url value='/img/chicken.png' />" alt="">
+			<img class="store-logo" src="<c:url value='/img/${vo.shopCategory}.png' />" alt="">
 			<div class="store-info">
 				<span class="store-title">${vo.shopName}</span>
 				<div class="store-etc">
