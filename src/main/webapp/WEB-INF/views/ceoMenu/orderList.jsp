@@ -35,7 +35,9 @@
 	                  <td class="order-time">${newo.orderDate}</td>
 	                  <td class="order-menu">
 	                    <ul>
-	                      <li><span>${newo.orderMenu.menu.menuName}</span> <span>/ ${newo.orderMenu.amount}</span></li>
+                			<c:forEach var="om" items="${newo.orderMenu}">
+	                     		<li><span>${om.menu.menuName}</span> <span>/ ${om.amount}</span></li>
+	                      	</c:forEach>
 	                    </ul>
 	                  </td>
 	                  <td class="order-addr">
@@ -81,7 +83,9 @@
 	                  <td class="order-time">${commit.orderDate}</td>
 	                  <td class="order-menu">
 	                    <ul>
-	                      <li><span>${commit.orderMenu.menu.menuName}</span> <span>/ ${commit.orderMenu.amount}</span></li>
+	                      <c:forEach var="om" items="${commit.orderMenu}">
+	                     	 <li><span>${om.menu.menuName}</span> <span>/ ${om.amount}</span></li>
+	                      </c:forEach>
 	                    </ul>
 	                  </td>
 	                  <td class="order-addr">
@@ -119,7 +123,9 @@
 	                  <td class="order-time">${cook.orderDate}</td>
 	                  <td class="order-menu">
 	                    <ul>
-	                      <li><span>${cook.orderMenu.menu.menuName}</span> <span>/ ${cook.orderMenu.amount}</span></li>
+                			<c:forEach var="om" items="${cook.orderMenu}">
+	                     		<li><span>${om.menu.menuName}</span> <span>/ ${om.amount}</span></li>
+	                      	</c:forEach>
 	                    </ul>
 	                  </td>
 	                  <td class="order-addr">

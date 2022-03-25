@@ -109,6 +109,13 @@ public class CeoInfoController {
 		return "redirect:/";
 	}
 	
+	//로그아웃
+	@GetMapping("/ceologout")
+	public String logout(HttpSession session) {
+		System.out.println("사업자 로그아웃");
+		session.removeAttribute("ceoLogin");
+		return "redirect:/";
+	}
 	
 	//사업자 탈퇴
 	@GetMapping("/ceoDelete")

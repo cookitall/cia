@@ -32,7 +32,12 @@
 	                  		<p class="ordered-store">${oh.shopName}</p>
 	                	</div>
 	                	<div class="menu-wrap">
-	                  		<p class="ordered-menu">메뉴</p>
+	                  		<ul>
+	                  			<c:forEach var="om" items="${oh.orderMenu}">
+	                  				<li>${om.menu.menuName}
+	                  				</li>${om.amount}
+	                  			</c:forEach>
+	                  		</ul>
 	                	</div>
 	                	<div class="right-side">
 	                  		<p class="ordered-price">${oh.odvo.orderPrice}원</p>

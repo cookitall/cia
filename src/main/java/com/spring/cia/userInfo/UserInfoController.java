@@ -108,6 +108,13 @@ public class UserInfoController {
 		return "redirect:/";
 	}
 
+	//로그아웃
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		System.out.println("유저 로그아웃");
+		session.removeAttribute("userLogin");
+		return "redirect:/";
+	}
 
 	//회원 탈퇴
 	@GetMapping("/delete")

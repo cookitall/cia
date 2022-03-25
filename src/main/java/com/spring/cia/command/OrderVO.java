@@ -23,6 +23,7 @@ CREATE SEQUENCE ordernum_seq
     NOCACHE;
 */
 import java.sql.Timestamp;
+import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -44,5 +45,5 @@ public class OrderVO {
 	private OrderDetailVO odvo;
 	private PaymentVO pay;
 	private DeliveryVO deli;
-	private OrderMenuVO orderMenu;
+	private List<OrderMenuVO> orderMenu;
 }

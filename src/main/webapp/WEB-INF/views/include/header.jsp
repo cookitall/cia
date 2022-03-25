@@ -30,9 +30,11 @@
     	<c:choose>
     		<c:when test="${ceoLogin != null}" >
         		<li><a href="<c:url value='/ceoInfo/ceoModify' />"><span class="btn-login">사업자 정보</span></a></li>
+        		<li><a href="<c:url value='/ceoInfo/ceologout' />"><span class="btn-login">로그아웃</span></a></li>
         	</c:when>
         	<c:when test="${userLogin != null}">
         		<li><a href="<c:url value='/userInfo/modify' />"><span class="btn-login" >내 정보</span></a></li>
+        		<li><a href="<c:url value='/userInfo/logout' />"><span class="btn-login">로그아웃</span></a></li>
         	</c:when>
         	<c:otherwise>
         		<li><a href="<c:url value='/userInfo/login' />"><span class="btn-login">로그인</span></a></li>

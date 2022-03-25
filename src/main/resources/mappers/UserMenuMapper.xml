@@ -28,6 +28,9 @@
   	<result property="userId" column="user_id"/>
   	<result property="payway" column="payway"/>
   	<collection property="odvo" resultMap="orDeVO"/>
+  	<collection property="pay" resultMap="pay" />
+  	<collection property="deli" resultMap="deli" />
+  	<collection property="orderMenu" resultMap="orderMenu" />
   </resultMap>
   
   <resultMap type="com.spring.cia.command.OrderDetailVO" id="orDeVO">
@@ -37,6 +40,32 @@
   	<result property="userName" column="user_name"/>
   	<result property="userAddr1" column="user_addr1"/>
   	<result property="userAddr2" column="user_addr2"/>
+  </resultMap>
+  
+  <resultMap type="com.spring.cia.command.PaymentVO" id="pay">
+  		<id property="orderNum" column="order_num"/>
+  		<result property="originalPrice" column="original_price"/>
+  		<result property="couponDiscount" column="coupon_discount"/>
+  		<result property="orderPrice" column="order_price"/>
+  </resultMap>
+
+  <resultMap type="com.spring.cia.command.DeliveryVO" id="deli">
+  		<id property="orderNum" column="order_num"/>
+  		<result property="orderState" column="order_state"/>
+  		<result property="deliveryPrice" column="delivery_price"/>
+  </resultMap>
+  	
+  <resultMap type="com.spring.cia.command.OrderMenuVO" id="orderMenu">
+  		<result property="orderNum" column="order_num"/>
+  		<result property="menuNum" column="menu_num"/>
+  		<result property="amount" column="amount"/>
+  		<result property="price" column="price"/>
+  		<collection property="menu" resultMap="mvo" />
+  </resultMap>
+  	
+  <resultMap type="com.spring.cia.command.MenuVO" id="mvo">
+  		<id property="menuNum" column="menu_num"/>
+  		<result property="menuName" column="menu_name"/>
   </resultMap>
   
   <resultMap type="com.spring.cia.command.UserInfoVO" id="user">
@@ -104,10 +133,20 @@
 				(
 				SELECT o.order_date, 
 					   o.shop_name,
-					   d.order_price
+					   d.order_price,
+					   m.*,
+					   n.menu_name
   				FROM cia_order o 
+  				
   				LEFT OUTER JOIN cia_order_detail d
 				ON o.order_num = d.order_num 
+						
+				LEFT OUTER JOIN cia_order_menu m
+				ON d.order_num = m.order_num
+				
+				LEFT OUTER JOIN cia_menu n
+				ON m.menu_num = n.menu_num
+				
 				WHERE user_id = #{userId}
 				ORDER BY o.order_num DESC
 				) tbl

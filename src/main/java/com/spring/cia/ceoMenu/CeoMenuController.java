@@ -170,6 +170,7 @@ public class CeoMenuController {
 		System.out.println("주문관리 Get 요청");
 		String shopName = ((CeoInfoVO)session.getAttribute("ceoLogin")).getShopName();
 		List<OrderVO> newList = service.newOrder(shopName);
+		System.out.println("뉴리스트"+newList.get(newList.size()-1).getOrderMenu().toString());
 		List<OrderVO> commitList = service.commitOrder(shopName);
 		List<OrderVO> cookList = service.cookOrder(shopName);
 		model.addAttribute("newList", newList);

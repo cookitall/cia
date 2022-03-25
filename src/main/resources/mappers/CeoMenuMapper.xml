@@ -61,6 +61,7 @@
   		<result property="orderNum" column="order_num"/>
   		<result property="menuNum" column="menu_num"/>
   		<result property="amount" column="amount"/>
+  		<result property="price" column="price"/>
   		<collection property="menu" resultMap="mvo" />
   	</resultMap>
   	
@@ -154,7 +155,7 @@
 	<select id="newOrder" resultMap="order">
 		SELECT o.order_num,
 			   o.order_date,
-			   m.amount,
+			   m.*,
 			   n.menu_name,
 	           d.user_addr1,
 	           d.order_price
@@ -178,7 +179,7 @@
 	<select id="commitOrder" resultMap="order">
 		SELECT o.order_num,
 			   o.order_date,
-			   m.amount,
+			   m.*,
 			   n.menu_name,
 	           d.user_addr1,
 	           d.order_price
@@ -201,7 +202,7 @@
 	<select id="cookOrder" resultMap="order">
 		SELECT o.order_num,
 			   o.order_date,
-			   m.amount,
+			   m.*,
 			   n.menu_name,
 	           d.user_addr1,
 	           d.order_price
