@@ -14,6 +14,7 @@ CREATE TABLE cia_review
 );
 ALTER TABLE cia_review
 ADD(review_reply NUMBER(5) NOT NULL);
+ALTER TABLE cia_review DROP COLUMN menu_name;
 CREATE SEQUENCE review_seq
 
     START WITH 1
@@ -41,7 +42,6 @@ public class ReviewVO {
 	private int reviewNum;
 	private String userId;
 	private int orderNum;
-	private String menuName;
 	private String shopName;
 	private String reviewContent;
 	private int reviewStar;

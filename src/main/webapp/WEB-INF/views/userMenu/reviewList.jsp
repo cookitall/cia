@@ -32,10 +32,6 @@
 	            	<div class="buy-info">
 	            		<div class="name">${review.shopName}</div>
 	                    <div class="star-time">${review.reviewDate}</div>
-	                    <ul>
-	                    	<li class="menu">${review.menuName}</li>
-	                    	
-	                    </ul>
 	                </div>
 	                <div class="btn-wrap">
 	                  <a class="pink-btn" href="<c:url value='/userMenu/reviewDel?reviewNum=${review.reviewNum}'/>">삭제</a>

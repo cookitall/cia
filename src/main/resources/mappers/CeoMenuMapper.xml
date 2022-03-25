@@ -5,6 +5,61 @@
 
 <mapper
 	namespace="com.spring.cia.ceoMenu.mapper.ICeoMenuMapper">
+	
+		<resultMap type="com.spring.cia.command.ReviewVO" id="reviews">
+	  	<id property="reviewNum" column="review_num"/>
+	  	<result property="userId" column="user_id"/>
+	  	<result property="orderNum" column="order_num"/>
+	  	<result property="shopName" column="shop_name"/>
+	  	<result property="reviewContent" column="review_content"/>
+	  	<result property="reviewStar" column="review_star"/>
+	  	<result property="reviewDate" column="review_date"/>
+	  	<result property="reviewReply" column="review_reply"/>
+  	</resultMap>
+
+  	<resultMap type="com.spring.cia.command.ReplyVO" id="replys">
+	  	<id property="replyNum" column="reply_num"/>
+	  	<result property="reviewNum" column="review_num"/>
+	  	<result property="shopName" column="shop_name"/>
+	  	<result property="replyContent" column="reply_content"/>
+	  	<result property="replyDate" column="reply_date"/>
+  	</resultMap>
+
+  	<resultMap type="com.spring.cia.command.OrderVO" id="order">
+  		<id property="orderNum" column="order_num"/>
+  		<result property="orderDate" column="order_date"/>
+  		<result property="shopName" column="shop_name"/>
+  		<collection property="pay" resultMap="pay" />
+  		<collection property="deli" resultMap="deli" />
+  		<collection property="orderMenu" resultMap="orderMenu" />
+  	</resultMap>
+
+
+  	<resultMap type="com.spring.cia.command.PaymentVO" id="pay">
+  		<id property="orderNum" column="order_num"/>
+  		<result property="originalPrice" column="original_price"/>
+  		<result property="couponDiscount" column="coupon_discount"/>
+  		<result property="orderPrice" column="order_price"/>
+  	</resultMap>
+
+  	<resultMap type="com.spring.cia.command.DeliveryVO" id="deli">
+  		<id property="orderNum" column="order_num"/>
+  		<result property="orderState" column="order_state"/>
+  		<result property="deliveryPrice" column="delivery_price"/>
+  	</resultMap>
+  	
+  	<resultMap type="com.spring.cia.command.OrderMenuVO" id="orderMenu">
+  		<result property="orderNum" column="order_num"/>
+  		<result property="menuNum" column="menu_num"/>
+  		<collection property="mVO" resultMap="mvo" />
+  	</resultMap>
+  	
+  	<resultMap type="com.spring.cia.command.MenuVO" id="mvo">
+  		<id property="menuNum" column="menu_num"/>
+  		<result property="menuName" column="menu_name"/>
+  	</resultMap>
+	
+	
 	<!-- couponList -->
 	<insert id="generateCoupon">
 		INSERT INTO cia_coupons
@@ -58,19 +113,177 @@
     	WHERE menu_name = 'red'
 	</select>
 	
+	<!-- 
+	<resultMap type="map" id="selectMapList">
+        <result column="menu_name" property="studentNo"/>
+        <result column="menu_price" property="studentName"/>
+        <result column="student_tel" property="studentTel"/>
+        <result column="student_Addr" property="studentAddr"/>
+        <result column="student_email" property="studentEmail"/>
+        <result column="reg_date" property="redDate"/>
+    </resultMap>
+	 -->
+	
+	
+	<select id="getByteImageList" resultType="map">
+    	SELECT 
+	    	menu_name AS menuName,
+	    	menu_price AS menuPrice,
+	    	menu_info AS menuInfo,
+	    	menu_open AS menuOpen,
+	    	shop_name AS shopName,
+	    	menu_num AS menuNum,
+	    	menu_Image AS menuImage
+    	FROM cia_menu
+	</select>
+	
 	
 	<!-- menuList끝 -->
 	
 	<!-- orderList -->
+	<select id="newOrder" resultMap="order">
+		SELECT o.order_num,
+			   o.order_date,
+			   n.menu_name,
+	           d.user_addr1,
+	           d.order_price
+		FROM cia_order o
+		LEFT OUTER JOIN cia_order_detail d
+		ON o.order_num = d.order_num
+		
+		LEFT OUTER JOIN cia_delivery l
+		ON d.order_num = l.order_num
+		
+		LEFT OUTER JOIN cia_order_menu m
+		ON l.order_num = m.order_num
+		
+		LEFT OUTER JOIN cia_menu n
+		ON m.menu_num = n.menu_num
+		
+		WHERE l.order_state = 'new'
+		AND o.shop_name = #{shopName}
+	</select>
 	
+	<select id="commitOrder" resultMap="order">
+		SELECT o.order_num,
+			   o.order_date,
+			   n.menu_name,
+	           d.user_addr1,
+	           d.order_price
+		FROM cia_order o
+		LEFT OUTER JOIN cia_order_detail d
+		ON o.order_num = d.order_num
+		
+		LEFT OUTER JOIN cia_delivery l
+		ON d.order_num = l.order_num
+		
+		LEFT OUTER JOIN cia_order_menu m
+		ON l.order_num = m.order_num
+		
+		LEFT OUTER JOIN cia_menu n
+		ON m.menu_num = n.menu_num
+		
+		WHERE l.order_state = 'commit'
+		AND o.shop_name = #{shopName}
+	</select>
+	<select id="cookOrder" resultMap="order">
+		SELECT o.order_num,
+			   o.order_date,
+			   n.menu_name,
+	           d.user_addr1,
+	           d.order_price
+		FROM cia_order o
+		LEFT OUTER JOIN cia_order_detail d
+		ON o.order_num = d.order_num
+		
+		LEFT OUTER JOIN cia_delivery l
+		ON d.order_num = l.order_num
+		
+		LEFT OUTER JOIN cia_order_menu m
+		ON l.order_num = m.order_num
+		
+		LEFT OUTER JOIN cia_menu n
+		ON m.menu_num = n.menu_num
+		
+		WHERE l.order_state = 'cook'
+		AND o.shop_name = #{shopName}
+	</select>
 	<!-- orderList끝 -->
 	
 	<!-- saleHistory -->
-	
+	<select id="saleHis" resultMap="order">
+		SELECT o.order_num,
+			   p.original_price,
+			   p.coupon_discount,
+			   d.delivery_price,
+			   p.order_price
+		FROM cia_order o
+		LEFT OUTER JOIN cia_payment p
+		ON o.order_num = p.order_num
+		LEFT OUTER JOIN cia_delivery d
+		ON p.order_num = d.order_num
+		WHERE d.order_state = 'end'
+		AND o.shop_name = #{shopName}
+		AND TO_CHAR(o.order_date) BETWEEN #{dayStart} AND #{dayEnds}
+	</select>
 	<!-- saleHistory끝 -->
 	
 	<!-- shopReviewList -->
-	
+	<select id="reivewList" resultMap="reviews">
+		SELECT * FROM	
+			(
+			SELECT ROWNUM AS rn, tbl.* FROM
+				(
+				SELECT * FROM cia_review
+				WHERE shop_name = #{shopName}
+				ORDER BY review_num DESC
+				) tbl
+			)
+		<![CDATA[
+		WHERE rn > (#{pvo.pageNum} - 1) * #{pvo.countPerPage}
+		AND rn <= #{pvo.pageNum} * #{pvo.countPerPage}
+		]]>  
+  </select>
+
+  <select id="getReviewTotal" resultType="int">
+  	SELECT COUNT(*)
+  	FROM cia_review
+    WHERE shop_name = #{shopName}
+  </select>
+
+  <select id="replyContent" resultMap="replys">
+  	SELECT * FROM cia_review_reply
+  	WHERE review_num = #{reviewNum}
+  </select>
+
+  <insert id="replyWrite">
+  	INSERT INTO cia_review_reply
+  	(reply_num, review_num, shop_name, reply_content)
+  	VALUES(REPLY_SEQ.nextval, #{writeReviewNum}, #{writeShopName}, #{writeReplyContent})
+  </insert>
+
+  <update id="reviewReply">
+  	UPDATE cia_review
+  	SET review_reply = 1
+  	WHERE review_num = #{writeReviewNum}
+  </update>
+
+  <delete id="replyDelete">
+  	DELETE cia_review_reply
+	WHERE reply_num = #{replyNum}
+  </delete>
+
+  <update id="revewiReplyDel">
+	UPDATE cia_review
+	SET review_reply = 0
+	WHERE review_num = #{reviewNum}
+  </update>
+
+  <update id="replyModify">
+  	UPDATE cia_review_reply
+  	SET reply_content = #{replyContent}
+  	WHERE reply_num = #{replyNum}
+  </update>
 	<!-- shopReviewList끝 -->
 
 </mapper>

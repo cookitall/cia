@@ -22,27 +22,27 @@
 					<th class="menu-info">정 보</th>
 					<th class="menu-btn"></th>
 				</tr>
-				<!-- 반복문 요소 -->
-				<tr>
-					<td class="menu-order">
-						<button class="up">🔼</button> <br />
-						<button class="down">🔽</button>
-					</td>
-					<td class="menu-img"><img src="../img/chiken.jpg" alt="" /></td>
-					<td class="menu-name">후라이드 치킨</td>
-					<td class="menu-price">17,000원</td>
-					<td class="menu-info">
-					<textarea name="" id="" cols="60"
-							rows="3">바삭하게 튀겨서 맛이 있는 호식이의 자랑 후라이드 치킨입니다</textarea>
-					</td>
-					<td class="menu-btn">
-						<button class="for-sail-btn">판매</button>
-						<button class="sold-out-btn">매진</button> <br />
-						<button class="modify-btn btn-open-popup">수정</button>
-						<button class="del-btn">삭제</button>
-					</td>
-				</tr>
-				<!-- 반복문 종료 -->
+				<c:forEach var="result" items="${result}" varStatus="status" >
+					<tr>
+						<td class="menu-order">
+							<button class="up">🔼</button> <br />
+							<button class="down">🔽</button>
+						</td>
+						<td class="menu-img"><img src="data:image/jpeg;base64,${result.encodedString}" alt="" /></td>
+						<td class="menu-name">${result.menuName}</td>
+						<td class="menu-price">${result.menuPrice}</td>
+						<td class="menu-info">
+						<textarea name="" id="" cols="60"
+								rows="3">${result.menuInfo}</textarea>
+						</td>
+						<td class="menu-btn">
+							<button class="for-sail-btn">판매</button>
+							<button class="sold-out-btn">매진</button> <br />
+							<button class="modify-btn btn-open-popup">수정</button>
+							<button class="del-btn">삭제</button>
+						</td>
+					</tr>
+				</c:forEach>
 			</table>
 		</div>
 		<!-- 메뉴 container end -->
