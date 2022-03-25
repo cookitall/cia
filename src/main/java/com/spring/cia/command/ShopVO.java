@@ -34,5 +34,7 @@ public class ShopVO {
 	private String shopAddr2;
 	private int deliveryPrice;
 	private double avgStar;
+	private int reviewCount;
+	private int replyCount;
 
 }
