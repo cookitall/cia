@@ -177,6 +177,18 @@ public class CeoMenuController {
 		model.addAttribute("cookList", cookList);
 
 	}
+	@GetMapping("/orderCommit")
+	public String orderCommit(int orderNum, String state, int orderTimer) {
+		System.out.println("orderCommit GET");
+		service.orderCommit(orderNum, state, orderTimer);
+		return "redirect:/ceoMenu/orderList";
+	}
+	@GetMapping("/orderUpdate") 
+	public String orderUpdate(int orderNum, String state) {
+		System.out.println("orderUpdate GET");
+		service.orderUpdate(orderNum, state);
+		return "redirect:/ceoMenu/orderList";
+	}
 
 	/*
 	 * orderList 끝

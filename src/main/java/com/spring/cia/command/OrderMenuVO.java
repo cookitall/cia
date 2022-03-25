@@ -22,5 +22,5 @@ public class OrderMenuVO {
 	private int amount;
 	private int price;
 	
-	private MenuVO mVO;
+	private MenuVO menu;
 }

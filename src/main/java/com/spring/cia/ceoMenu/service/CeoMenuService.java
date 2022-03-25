@@ -116,6 +116,14 @@ public class CeoMenuService implements ICeoMenuService {
 		return mapper.cookOrder(shopName);
 	}
 
+	public void orderCommit(int orderNum, String state, int orderTimer) {
+		mapper.orderCommit(orderNum, state, orderTimer);
+	}
+
+	public void orderUpdate(int orderNum, String state) {
+		mapper.orderUpdate(orderNum, state);
+	}
+
 
 	/*
 	 * orderList 끝

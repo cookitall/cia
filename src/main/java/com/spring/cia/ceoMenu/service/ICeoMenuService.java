@@ -3,6 +3,8 @@ package com.spring.cia.ceoMenu.service;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.spring.cia.command.CouponVO;
 import com.spring.cia.command.OrderVO;
 import com.spring.cia.command.ReplyVO;
@@ -49,6 +51,8 @@ public interface ICeoMenuService {
 	List<OrderVO> newOrder(String shopName);
 	List<OrderVO> commitOrder(String shopName);
 	List<OrderVO> cookOrder(String shopName);
+	void orderCommit(int orderNum, String state, int orderTimer);
+	void orderUpdate(int orderNum, String state);
 
 	/*
 	 * orderList 끝

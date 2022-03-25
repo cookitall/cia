@@ -29,11 +29,20 @@
   		<id property="orderNum" column="order_num"/>
   		<result property="orderDate" column="order_date"/>
   		<result property="shopName" column="shop_name"/>
+  		<collection property="odvo" resultMap="orDeVO"/>
   		<collection property="pay" resultMap="pay" />
   		<collection property="deli" resultMap="deli" />
   		<collection property="orderMenu" resultMap="orderMenu" />
   	</resultMap>
 
+	  <resultMap type="com.spring.cia.command.OrderDetailVO" id="orDeVO">
+	  	<id property="orderNum" column="order_num"/>
+	  	<result property="orderPrice" column="order_price"/>
+	  	<result property="orderMsg" column="order_msg"/>
+	  	<result property="userName" column="user_name"/>
+	  	<result property="userAddr1" column="user_addr1"/>
+	  	<result property="userAddr2" column="user_addr2"/>
+	  </resultMap>
 
   	<resultMap type="com.spring.cia.command.PaymentVO" id="pay">
   		<id property="orderNum" column="order_num"/>
@@ -51,7 +60,8 @@
   	<resultMap type="com.spring.cia.command.OrderMenuVO" id="orderMenu">
   		<result property="orderNum" column="order_num"/>
   		<result property="menuNum" column="menu_num"/>
-  		<collection property="mVO" resultMap="mvo" />
+  		<result property="amount" column="amount"/>
+  		<collection property="menu" resultMap="mvo" />
   	</resultMap>
   	
   	<resultMap type="com.spring.cia.command.MenuVO" id="mvo">
@@ -144,6 +154,7 @@
 	<select id="newOrder" resultMap="order">
 		SELECT o.order_num,
 			   o.order_date,
+			   m.amount,
 			   n.menu_name,
 	           d.user_addr1,
 	           d.order_price
@@ -167,6 +178,7 @@
 	<select id="commitOrder" resultMap="order">
 		SELECT o.order_num,
 			   o.order_date,
+			   m.amount,
 			   n.menu_name,
 	           d.user_addr1,
 	           d.order_price
@@ -189,6 +201,7 @@
 	<select id="cookOrder" resultMap="order">
 		SELECT o.order_num,
 			   o.order_date,
+			   m.amount,
 			   n.menu_name,
 	           d.user_addr1,
 	           d.order_price
@@ -208,6 +221,17 @@
 		WHERE l.order_state = 'cook'
 		AND o.shop_name = #{shopName}
 	</select>
+	
+	<update id="orderCommit">
+		UPDATE cia_delivery
+		SET order_timer = #{orderTimer}, order_state = #{state}
+		WHERE order_num = #{orderNum}
+	</update>
+	<update id="orderUpdate">
+		UPDATE cia_delivery
+		SET order_state = #{state}
+		WHERE order_num = #{orderNum}
+	</update>
 	<!-- orderList끝 -->
 	
 	<!-- saleHistory -->

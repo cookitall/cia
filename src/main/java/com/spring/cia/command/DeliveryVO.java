@@ -25,6 +25,6 @@ public class DeliveryVO {
 	private int orderNum;
 	private Timestamp orderDate;
 	private int orderTimer;
-	private String orderState; //new-주문미접수 commit-주문접수 cook-조리중 deliGo-배달시작 end-완료 
+	private String orderState; //new-주문미접수 commit-주문접수 cook-조리중 deliGo-배달시작 end-완료  cancel-취소
 	private int deliveryPrice;
 }

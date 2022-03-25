@@ -22,7 +22,7 @@
                 <tr>
                   <th class="order-num">주문 번호</th>
                   <th class="order-time">주문 시간</th>
-                  <th class="order-menu">메 뉴</th>
+                  <th class="order-menu">메 뉴/ 수량</th>
                   <th class="order-addr">주 소</th>
                   <th class="order-price">가 격</th>
                   <th class="order-btn"></th>
@@ -31,11 +31,11 @@
                 <!-- 반복문 요소 -->
                 <c:forEach var="newo" items="${newList}">
 	                <tr>
-	                  <td class="order-num">${newo.orderNum}</td>
+	                  <td class="orderNum">${newo.orderNum}</td>
 	                  <td class="order-time">${newo.orderDate}</td>
 	                  <td class="order-menu">
 	                    <ul>
-	                      <li><span>${newo.orderMenu.mVo.menuName}</span> <span>${newo.orderMenu.amount}</span></li>
+	                      <li><span>${newo.orderMenu.menu.menuName}</span> <span>/ ${newo.orderMenu.amount}</span></li>
 	                    </ul>
 	                  </td>
 	                  <td class="order-addr">
@@ -43,8 +43,13 @@
 	                  </td>
 	                  <td class="order-price">${newo.odvo.orderPrice}</td>
 	                  <td class="order-btn">
-	                    <button class="accetp-btn">수락</button>
-	                    <button class="cancel-btn">취소</button>
+	                  	<form action="<c:url value='/ceoMenu/orderCommit' />"> 
+	                  		<input type="number" name="orderTimer" id="orderTimer" placeholder="배달 예상시간을 설정하세요">
+	                  		<input type="hidden" name="state" id="state" value="commit">
+	                  		<input type="hidden" name="orderNum" id="orderNum" value="${newo.orderNum}">
+		                    <button type="submit" class="accetp-btn">접수</button>
+		                    <button type="button" class="cancel-btn" onclick="location.href='<c:url value="/ceoMenu/orderUpdate?orderNum=${newo.orderNum}&state=calcel"/>'">취소</button>
+	                  	</form>               
 	                  </td>
 	                </tr>
                 </c:forEach>
@@ -63,7 +68,7 @@
                 <tr>
                   <th class="order-num">주문 번호</th>
                   <th class="order-time">주문 시간</th>
-                  <th class="order-menu">메 뉴</th>
+                  <th class="order-menu">메 뉴/ 수량</th>
                   <th class="order-addr">주 소</th>
                   <th class="order-price">가 격</th>
                   <th class="order-btn"></th>
@@ -76,7 +81,7 @@
 	                  <td class="order-time">${commit.orderDate}</td>
 	                  <td class="order-menu">
 	                    <ul>
-	                      <li><span>${commit.orderMenu.mVo.menuName}</span> <span>${commit.orderMenu.amount}</span></li>
+	                      <li><span>${commit.orderMenu.menu.menuName}</span> <span>/ ${commit.orderMenu.amount}</span></li>
 	                    </ul>
 	                  </td>
 	                  <td class="order-addr">
@@ -84,8 +89,8 @@
 	                  </td>
 	                  <td class="order-price">${commit.odvo.orderPrice}</td>
 	                  <td class="order-btn">
-	                    <button class="accetp-btn">수락</button>
-	                    <button class="cancel-btn">취소</button>
+	                    <button type="button" class="accetp-btn" onclick="location.href='<c:url value="/ceoMenu/orderUpdate?orderNum=${commit.orderNum}&state=cook"/>'">조리 시작</button>
+	                    <button type="button" class="cancel-btn" onclick="location.href='<c:url value="/ceoMenu/orderUpdate?orderNum=${commit.orderNum}&state=calcel"/>'">취소</button>
 	                  </td>
 	                </tr>
                 </c:forEach>
@@ -102,7 +107,7 @@
                 <tr>
                   <th class="order-num">주문 번호</th>
                   <th class="order-time">주문 시간</th>
-                  <th class="order-menu">메 뉴</th>
+                  <th class="order-menu">메 뉴/ 수량</th>
                   <th class="order-addr">주 소</th>
                   <th class="order-price">가 격</th>
                   <th class="order-btn"></th>
@@ -114,7 +119,7 @@
 	                  <td class="order-time">${cook.orderDate}</td>
 	                  <td class="order-menu">
 	                    <ul>
-	                      <li><span>${cook.orderMenu.mVo.menuName}</span> <span>${cook.orderMenu.amount}</span></li>
+	                      <li><span>${cook.orderMenu.menu.menuName}</span> <span>/ ${cook.orderMenu.amount}</span></li>
 	                    </ul>
 	                  </td>
 	                  <td class="order-addr">
@@ -122,8 +127,8 @@
 	                  </td>
 	                  <td class="order-price">${cook.odvo.orderPrice}</td>
 	                  <td class="order-btn">
-	                    <button class="accetp-btn">수락</button>
-	                    <button class="cancel-btn">취소</button>
+	                    <button type="button" class="accetp-btn" onclick="location.href='<c:url value="/ceoMenu/orderUpdate?orderNum=${cook.orderNum}&state=deliGo"/>'">배달 시작</button>
+	                    <button type="button" class="cancel-btn" onclick="location.href='<c:url value="/ceoMenu/orderUpdate?orderNum=${cook.orderNum}&state=calcel"/>'">취소</button>
 	                  </td>
 	                </tr>
                 </c:forEach>
