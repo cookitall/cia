@@ -44,4 +44,5 @@ public class OrderVO {
 	private OrderDetailVO odvo;
 	private PaymentVO pay;
 	private DeliveryVO deli;
+	private OrderMenuVO orderMenu;
 }

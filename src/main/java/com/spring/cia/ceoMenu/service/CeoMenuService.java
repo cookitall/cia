@@ -106,7 +106,16 @@ public class CeoMenuService implements ICeoMenuService {
 	/*
 	 * orderList
 	 */
-	
+	public List<OrderVO> newOrder(String shopName){
+		return mapper.newOrder(shopName);
+	}
+	public 	List<OrderVO> commitOrder(String shopName){
+		return mapper.commitOrder(shopName);
+	}
+	public 	List<OrderVO> cookOrder(String shopName){
+		return mapper.cookOrder(shopName);
+	}
+
 
 	/*
 	 * orderList 끝

@@ -20,9 +20,7 @@
 							<div class="name">${review.userId}회원님</div>
 							<div class="star-time">${review.reviewDate}</div>
 							<div class="star">별점: ${review.reviewStar}</div>
-							<ul>
-								<li class="menu">${review.menuName}</li>
-							</ul>
+
 						</div>
 					</div>
 					<div class="text-wrap">

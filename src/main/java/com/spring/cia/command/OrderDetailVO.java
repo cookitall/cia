@@ -10,7 +10,8 @@ CREATE TABLE cia_order_detail
 	user_name varchar2(50) NOT NULL,
 	user_addr1 varchar2(50) NOT NULL,
 	user_addr2 varchar2(50) NOT NULL
-);*/
+);
+ALTER TABLE cia_order_detail DROP COLUMN menu_name;*/
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -22,7 +23,6 @@ public class OrderDetailVO {
 	
 	
 	private int orderNum;
-	private String menuName;
 	private int orderPrice;
 	private String orderMsg;
 	private String userName;

@@ -39,7 +39,7 @@ public class CeoInfoController {
 		System.out.println("ceoLogin 요청 POST");
 		CeoInfoVO vo = service.ceoLogin(ceoId, ceoPw);
 		model.addAttribute("ceo", vo);
-		return "redirect:/";
+		return "redirect:/ceoMenu/orderList";
 	}
 	
 	

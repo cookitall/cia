@@ -166,8 +166,16 @@ public class CeoMenuController {
 	 * orderList
 	 */
 	@GetMapping("/orderList")
-	public void getOrderList() {
+	public void getOrderList(HttpSession session, Model model) {
 		System.out.println("주문관리 Get 요청");
+		String shopName = ((CeoInfoVO)session.getAttribute("ceoLogin")).getShopName();
+		List<OrderVO> newList = service.newOrder(shopName);
+		List<OrderVO> commitList = service.commitOrder(shopName);
+		List<OrderVO> cookList = service.cookOrder(shopName);
+		model.addAttribute("newList", newList);
+		model.addAttribute("commitList", commitList);
+		model.addAttribute("cookList", cookList);
+
 	}
 
 	/*

@@ -44,6 +44,9 @@ public interface ICeoMenuMapper {
 	/*
 	 * orderList
 	 */
+	List<OrderVO> newOrder(String shopName);
+	List<OrderVO> commitOrder(String shopName);
+	List<OrderVO> cookOrder(String shopName);
 
 	/*
 	 * orderList 끝
