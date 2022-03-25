@@ -47,4 +47,6 @@ public class ReviewVO {
 	private int reviewStar;
 	private Timestamp reviewDate;
 	private int reviewReply;     //리플이 있으면 1, 리플이 없으면 0
+	
+	private ReplyVO replyVO;
 }

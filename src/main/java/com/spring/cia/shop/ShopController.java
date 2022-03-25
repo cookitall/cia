@@ -43,6 +43,7 @@ public class ShopController {
 		System.out.println("storeContent?shopName=" + shopName + " 페이지 이동");
 		System.out.println(service.getShopInfo(shopName).toString());
 		model.addAttribute("shopInfo", service.getShopInfo(shopName));
+		model.addAttribute("reviewReplyList", service.getReviewReplyList(shopName));
 	}
 	
 	

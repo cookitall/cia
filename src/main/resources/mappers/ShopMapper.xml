@@ -19,6 +19,34 @@
 		<result property="replyCount" column="reply_count" />
 	</resultMap>
 	
+	<resultMap type="com.spring.cia.command.ReviewVO" id="ReviewMap">
+		<result property="reviewNum" column="review_num" />
+		<result property="userId" column="user_id" />
+		<result property="orderNum" column="order_num" />
+		<result property="shopName" column="shop_name" />
+		<result property="reviewContent" column="review_content" />
+		<result property="reviewStar" column="review_star" />
+		<result property="reviewDate" column="review_date" />
+		<result property="reviewReply" column="review_reply" />
+		<collection property="replyVO" resultMap="ReplyMap"/>
+	</resultMap>
+	
+	<resultMap type="com.spring.cia.command.ReplyVO" id="ReplyMap">
+		<result property="replyNum" column="reply_num" />
+		<result property="reviewNum" column="review_num" />
+		<result property="shopName" column="shop_name" />
+		<result property="replyContent" column="reply_content" />
+		<result property="replyDate" column="reply_date" />
+	</resultMap>
+	
+	<resultMap type="com.spring.cia.command.MenuVO" id="MenuMap">
+		<result property="menuName" column="user_id" />
+		<result property="menuName" column="menu_name" />
+		<result property="menuName" column="menu_name" />
+		<result property="menuName" column="menu_name" />
+		<result property="menuName" column="menu_name" />
+	</resultMap>
+	
 	<!-- <sql id="order">
 		<if test="condition == 'orderQuantity'">
 			WHERE title LIKE '%'||#{keyword}||'%'
@@ -83,7 +111,13 @@
 		WHERE cs.shop_name = #{shopName}
 	</select>
 	
-	<select id="getShopReviewList">
+	<select id="getReviewReplyList" resultMap="ReviewMap">
+		SELECT *
+		FROM cia_review cr
+		LEFT OUTER JOIN cia_review_reply crr
+		on cr.review_num = crr.review_num
+		WHERE cr.shop_name = #{shopName}
+		ORDER BY review_date DESC
 	</select>
 	
 	<select id="getShopMenuList">

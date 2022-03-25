@@ -1,7 +1,9 @@
 package com.spring.cia.shop.mapper;
 
 import java.util.List;
+import java.util.Map;
 
+import com.spring.cia.command.ReviewVO;
 import com.spring.cia.command.ShopVO;
 import com.spring.cia.util.PageVO;
 
@@ -14,5 +16,7 @@ public interface IShopMapper {
 	int getTotal(PageVO vo);
 	
 	ShopVO getShopInfo(String shopName);
+	
+	List<ReviewVO> getReviewReplyList(String shopName);
 
 }

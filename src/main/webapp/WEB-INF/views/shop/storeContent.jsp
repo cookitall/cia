@@ -47,28 +47,35 @@
           
           <div class="review-wrap" style="display: none">
 	            <!-- 반복문 요소 -->
-	          <div class="review">
-	          	<div class="user">
-	            	<div class="buy-info">
-	                    <div class="star-time">⭐⭐⭐⭐⭐ 2021년 12월 13일</div>
-	                    <ul>
-	                    	<li class="menu">마라탕</li>
-	                    	<li class="menu">마라샹궈</li>
-	                    </ul>
-	                </div>
-				</div>
-	            <div class="text-wrap">
-	            	<textarea name="" cols="60" rows="2" readonly>맛있게 잘 먹었습니다~
-					</textarea>
-	           </div>
-	           <div class="ceo">
-	           		<div class="text-wrap">
-	                	<textarea name="" cols="60" rows="2" readonly>손오공 마라탕: 주문해 주셔서 감사합니다
-					  	</textarea>
-	                </div>
+				<c:forEach var="rrList" items="${reviewReplyList}">
+		          <div class="review">
+		          	<div class="user">
+		            	<div class="buy-info">
+		                    <div class="star-time">${rrList.userId} ⭐⭐⭐⭐⭐ ${rrList.reviewDate}</div>
+		                    <c:forEach var="menu" items="${ReviewMenuList}">
+			                    <ul>
+			                    	<li class="menu">마라탕</li>
+			                    	<li class="menu">마라샹궈</li>
+			                    </ul>
+			                </c:forEach>
+		                </div>
+					</div>
+		            <div class="text-wrap">
+		            	<textarea name="" cols="60" rows="2" readonly>${rrList.reviewContent}
+						</textarea>
+		           </div>
+		           <c:if test="${not empty rrList.replyVO.replyDate}">
+			           <div class="ceo">
+			           		<div class="text-wrap">
+			           			사장님 ${rrList.replyVO.replyDate}<br>
+			                	<textarea name="" cols="60" rows="2" readonly>${rrList.replyVO.replyContent}
+							  	</textarea>
+			                </div>
+			            </div>
+		            </c:if>
 	            </div>
-	            </div>
-			</div>
+			</c:forEach>
+		</div>
 			
           <!-- 메뉴 상세 리스트 -->
           <div class="menu-container">
