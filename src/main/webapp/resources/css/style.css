@@ -1503,12 +1503,13 @@ textarea {
   width: 70px;
   height: 70px;
 }
-.menu-list .menu-btn button {
+.menu-list .menu-btn .btn {
   padding: 2px;
   border: 1px solid var(--gray);
   border-radius: 10px;
   margin: 2px;
 }
+
 .add-menu {
   display: flex;
   margin-bottom: 50px;

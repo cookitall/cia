@@ -26,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.spring.cia.ceoMenu.service.ICeoMenuService;
 import com.spring.cia.command.CeoInfoVO;
 import com.spring.cia.command.CouponVO;
+import com.spring.cia.command.MenuVO;
 import com.spring.cia.command.OrderVO;
 import com.spring.cia.command.ReplyVO;
 import com.spring.cia.command.ReviewVO;
@@ -43,14 +44,21 @@ public class CeoMenuController {
 	 * couponList
 	 */
 	@GetMapping("/couponList")
-	public void getCouponList(Model model) {
+	public void getCouponList(Model model, HttpSession session) {
 		System.out.println("쿠폰관리 Get 요청");
+		String shopName = ((CeoInfoVO)session.getAttribute("ceoLogin")).getShopName();
 
 		List<CouponVO> list = null;
-		list = service.getList();
+		list = service.getList(shopName);
 		model.addAttribute("couponList", list);
 	}
-
+	
+	@GetMapping("/couponUP")
+	public String couponUP(String couponCode, int couponRemain) {
+		System.out.println("쿠폰수량 변경요청");
+		service.couponUp(couponCode, couponRemain);
+		return "redirect:/ceoMenu/couponList";
+	}
 	/*
 	 * couponList 끝
 	 */
@@ -59,14 +67,16 @@ public class CeoMenuController {
 	 * menuList
 	 */
 	@GetMapping("/menuList")
-	public ModelAndView getMenuList() throws SQLException {
+	public ModelAndView getMenuList(HttpSession session) throws SQLException {
+		System.out.println("메뉴리스트요청");
 		//Blob 이미지의 encoded 문자열 담을 전용 List
 		List<Map<String,Object>> paramList = new ArrayList<Map<String,Object>>();
-		System.out.println("paramList =>" + paramList.toString());
 		ModelAndView model = new ModelAndView("ceoMenu/menuList");
 		
-		List<Map<String, Object>> list = service.getByteImageList();
-		System.out.println(list.toString());
+		String shopName = ((CeoInfoVO)session.getAttribute("ceoLogin")).getShopName();
+
+		
+		List<Map<String, Object>> list = service.getByteImageList(shopName);
 		model.addObject("list", list);
 
 		Iterator<Map<String, Object>> itr = list.iterator();
@@ -74,29 +84,31 @@ public class CeoMenuController {
 		while (itr.hasNext()) {
 			
 			Map<String, Object> element = (Map<String, Object>) itr.next();
-			System.out.println(element.toString());
 			
+			String menuNum = String.valueOf(element.get("MENUNUM"));
 			String menuName = (String) element.get("MENUNAME");
 			String menuPrice = String.valueOf(element.get("MENUPRICE"));
 			String menuInfo = (String) element.get("MENUINFO");
+			String menuOpen = (String) element.get("MENUOPEN");
+
 			
 			
 			Blob tempImage = (Blob) element.get("MENUIMAGE");
-			
-			byte[] encoded = org.apache.commons.codec.binary.Base64.encodeBase64(tempImage.getBytes(1, (int) tempImage.length()));
-			String encodedString = new String(encoded);
-			System.out.println("encodedString ==> " + encodedString);
-			
 			Map<String, Object> tempMap = new HashMap<String, Object>();
-			tempMap.put("encodedString", encodedString);
+			if(tempImage != null) {
+				byte[] encoded = org.apache.commons.codec.binary.Base64.encodeBase64(tempImage.getBytes(1, (int) tempImage.length()));
+				String encodedString = new String(encoded);
+				tempMap.put("encodedString", encodedString);
+				
+			}
 			tempMap.put("menuName", menuName);
 			tempMap.put("menuPrice", menuPrice);
 			tempMap.put("menuInfo", menuInfo);
-			
+			tempMap.put("menuNum", menuNum);
+			tempMap.put("menuOpen", menuOpen);
 			paramList.add(tempMap);
-			System.out.println("paramList==>" + paramList);
 			model.addObject("result", paramList);
-			
+		
 		}
 		return model;
 
@@ -132,7 +144,52 @@ public class CeoMenuController {
 
 	// 메뉴 등록 작업
 	@PostMapping("/menuList/menuSubmit")
-	public String postMenuSubmit(MultipartHttpServletRequest req) throws IOException {
+	public String postMenuSubmit(MultipartHttpServletRequest req, HttpSession session) throws IOException {
+		String menuName = req.getParameter("menuName");
+		Integer menuPrice = Integer.parseInt(req.getParameter("menuPrice"));
+		MultipartFile menuImage = req.getFile("menuImage");
+		String menuInfo = req.getParameter("menuInfo");
+		String shopName = ((CeoInfoVO)session.getAttribute("ceoLogin")).getShopName();
+
+
+		try {
+
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("menuName", menuName);
+			map.put("menuPrice", menuPrice);
+			map.put("menuInfo", menuInfo);
+			map.put("menuOpen", "open");
+			map.put("shopName", shopName);
+			map.put("menuImage", menuImage.getBytes());
+			service.insertMenu(map);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+		// int 성공여부 check
+
+		return "redirect:/ceoMenu/menuList";
+	}
+	
+	//메뉴 숨김 오픈 설정
+	@GetMapping("/menuSold")
+	public String menuSold (String menuOpen, String menuNum) {
+		System.out.println("메뉴 숨김 설정 요청");
+		service.menuSold(menuOpen, menuNum);		
+		return "redirect:/ceoMenu/menuList";		
+	}
+	//메뉴삭제
+	@GetMapping("/menuDelete")
+	public String menuDelete(String menuNum) {
+		System.out.println("메뉴 삭제요청");
+		service.menuDelete(menuNum);
+		return "redirect:/ceoMenu/menuList";		
+
+	}
+	//메뉴 수정
+	@PostMapping("/menuModi")
+	public String menuModi(MultipartHttpServletRequest req, String menuNum) throws IOException{
 		String menuName = req.getParameter("menuName");
 		Integer menuPrice = Integer.parseInt(req.getParameter("menuPrice"));
 		MultipartFile menuImage = req.getFile("menuImage");
@@ -144,18 +201,14 @@ public class CeoMenuController {
 			map.put("menuName", menuName);
 			map.put("menuPrice", menuPrice);
 			map.put("menuInfo", menuInfo);
-			map.put("menuOpen", "open");
-			map.put("shopName", "쿡잇올");
 			map.put("menuImage", menuImage.getBytes());
-			service.insertMenu(map);
+			service.menuModi(map, menuNum);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 
 		}
-		// int 성공여부 check
-
-		return "redirect:/ceoMenu/menuList";
+		return "redirect:/ceoMenu/menuList";		
 	}
 
 	/*
@@ -169,13 +222,14 @@ public class CeoMenuController {
 	public void getOrderList(HttpSession session, Model model) {
 		System.out.println("주문관리 Get 요청");
 		String shopName = ((CeoInfoVO)session.getAttribute("ceoLogin")).getShopName();
-		List<OrderVO> newList = service.newOrder(shopName);
-		System.out.println("뉴리스트"+newList.get(newList.size()-1).getOrderMenu().toString());
+		List<OrderVO> newList = service.newOrder(shopName);	
 		List<OrderVO> commitList = service.commitOrder(shopName);
 		List<OrderVO> cookList = service.cookOrder(shopName);
-		model.addAttribute("newList", newList);
-		model.addAttribute("commitList", commitList);
-		model.addAttribute("cookList", cookList);
+		if(newList != null && commitList != null && cookList !=null) {
+			model.addAttribute("newList", newList);
+			model.addAttribute("commitList", commitList);
+			model.addAttribute("cookList", cookList);
+		}
 
 	}
 	@GetMapping("/orderCommit")

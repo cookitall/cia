@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 
 import com.spring.cia.command.CouponVO;
+import com.spring.cia.command.MenuVO;
 import com.spring.cia.command.OrderVO;
 import com.spring.cia.command.ReplyVO;
 import com.spring.cia.command.ReviewVO;
@@ -19,9 +20,11 @@ public interface ICeoMenuMapper {
 	// 쿠폰 만들기
 	void generateCoupon(CouponVO couponVO);
 
-	List<CouponVO> getList();
+	List<CouponVO> getList(String shopName);
 
 	void deleteLine(String couponCode);
+	
+	void couponUp(@Param("couponCode")String couponCode, @Param("couponRemain")int couponRemain);
 
 	/*
 	 * couponList 끝
@@ -35,7 +38,12 @@ public interface ICeoMenuMapper {
 
 	Map<String, Object> getByteImage();
 
-	List<Map<String, Object>> getByteImageList();
+	List<Map<String, Object>> getByteImageList(String shopName);
+	
+	
+	void menuSold(@Param("menuOpen")String menuOpen,@Param("menuNumber")int menuNumber);
+	void menuDelete(int menuNumber);
+	void menuModi(@Param("map")Map<String, Object> map, @Param("menuNumber")int menuNumber);
 
 	/*
 	 * menuList 끝

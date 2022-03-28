@@ -6,6 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.spring.cia.ceoMenu.service.ICeoMenuService;
+import com.spring.cia.command.CeoInfoVO;
 import com.spring.cia.command.CouponVO;
 import com.spring.cia.command.MenuVO;
 
@@ -33,9 +36,10 @@ public class CeoMenuRestController {
 	// 쿠폰생성 Post
 	@PostMapping("/generateCoupon")
 	@ResponseBody
-	public HashMap<String, String> postGenerateCoupon(@RequestBody CouponVO couponVO, Model model) {
+	public HashMap<String, String> postGenerateCoupon(@RequestBody CouponVO couponVO, Model model, HttpSession session) {
+		System.out.println("쿠폰 POST");
 		System.out.println("Check coupon VO" + couponVO);
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy-MM-dd");
 
 		// RegDate와 EndDate를 yyyy-MM-dd 형태로 변환
 		String tempRegDateToString = simpleDateFormat.format(couponVO.getCouponRegDate());
@@ -55,7 +59,9 @@ public class CeoMenuRestController {
 		}
 
 		HashMap<String, String> result = new HashMap<String, String>();
-
+		String shopName = ((CeoInfoVO)session.getAttribute("ceoLogin")).getShopName();
+		couponVO.setShopName(shopName);
+		
 		// 쿠폰 코드 생성해서 map 에 넣기
 		String couponCode = service.generateCoupon(couponVO);
 		System.out.println("생성된 쿠폰코드 => " + couponCode);
@@ -63,7 +69,7 @@ public class CeoMenuRestController {
 		System.out.println("result.toString() =>" + result.toString());
 
 		List<CouponVO> list = null;
-		list = service.getList();
+		list = service.getList(shopName);
 		model.addAttribute("couponList", list);
 
 		return result;
@@ -71,12 +77,14 @@ public class CeoMenuRestController {
 
 	@PostMapping("/deleteLine")
 	@ResponseBody
-	public void deleteLine(@RequestBody String couponCode, Model model) throws Exception {
+	public void deleteLine(@RequestBody String couponCode, Model model, HttpSession session) throws Exception {
 		System.out.println(couponCode);
 		service.deleteLine(couponCode);
+		String shopName = ((CeoInfoVO)session.getAttribute("ceoLogin")).getShopName();
 
+		
 		List<CouponVO> list = null;
-		list = service.getList();
+		list = service.getList(shopName);
 		model.addAttribute("couponList", list);
 
 	}

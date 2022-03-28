@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.spring.cia.ceoMenu.mapper.ICeoMenuMapper;
 import com.spring.cia.command.CouponVO;
 import com.spring.cia.command.DeliveryVO;
+import com.spring.cia.command.MenuVO;
 import com.spring.cia.command.OrderVO;
 import com.spring.cia.command.PaymentVO;
 import com.spring.cia.command.ReplyVO;
@@ -62,8 +63,8 @@ public class CeoMenuService implements ICeoMenuService {
 	}
 
 	@Override
-	public List<CouponVO> getList() {
-		return mapper.getList();
+	public List<CouponVO> getList(String shopName) {
+		return mapper.getList(shopName);
 	}
 
 	@Override
@@ -71,6 +72,9 @@ public class CeoMenuService implements ICeoMenuService {
 		mapper.deleteLine(couponCode);
 	}
 
+	public 	void couponUp(String couponCode, int couponRemain) {
+		mapper.couponUp(couponCode, couponRemain);
+	}
 
 
 	/*
@@ -93,11 +97,23 @@ public class CeoMenuService implements ICeoMenuService {
 	}
 
 	@Override
-	public List<Map<String, Object>> getByteImageList() {
-		return mapper.getByteImageList();
+	public List<Map<String, Object>> getByteImageList(String shopName) {
+		return mapper.getByteImageList(shopName);
 	}
 	
-
+	
+	public void menuSold(String menuOpen, String menuNum) {
+		int menuNumber = Integer.parseInt(menuNum);
+		mapper.menuSold(menuOpen, menuNumber);
+	}
+	public void menuDelete(String menuNum) {
+		int menuNumber = Integer.parseInt(menuNum);
+		mapper.menuDelete(menuNumber);
+	}
+	public void menuModi(Map<String, Object> map, String menuNum) {
+		int menuNumber = Integer.parseInt(menuNum);
+		mapper.menuModi(map, menuNumber);
+	}
 	/*
 	 * menuList 끝
 	 */

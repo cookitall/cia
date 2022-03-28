@@ -81,7 +81,13 @@
 									<td>${couponList.getCouponTermPrice()}원이상</td>
 									<td>${couponList.getCouponDiscount()}원</td>
 									<td>${couponList.getCouponRemain()}</td>
-									<td><button>수량추가</button></td>
+									<td>
+										<form action="<c:url value='/ceoMenu/couponUP'/>">
+											<input type="number" name="couponRemain" id="couponRemain">
+											<input type="hidden" name="couponCode" id="couponCode" value="${couponList.getCouponCode()}">
+											<button>수량변경</button>
+										</form>
+									</td>
 									<td><button onclick="deleteBtn('${couponList.couponCode}')">매진처리</button></td>
 								</tr>
 							</c:forEach>

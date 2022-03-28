@@ -13,6 +13,7 @@ CREATE TABLE cia_menu
 	shop_name varchar2(50) NOT NULL
 );
 ALTER TABLE cia_menu ADD menu_num NUMBER PRIMARY KEY;
+ALTER TABLE cia_menu ADD menu_image BLOB;
 CREATE SEQUENCE menunum_seq
     START WITH 1
     INCREMENT BY 1

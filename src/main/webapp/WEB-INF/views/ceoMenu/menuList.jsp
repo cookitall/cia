@@ -15,7 +15,7 @@
 			<table class="menu-list">
 				<caption>현재 메뉴</caption>
 				<tr>
-					<th class="menu-order">순서</th>
+					<th class="menu-order">메뉴 번호</th>
 					<th class="menu-img">이미지</th>
 					<th class="menu-name">이 름</th>
 					<th class="menu-price">가 격</th>
@@ -24,10 +24,7 @@
 				</tr>
 				<c:forEach var="result" items="${result}" varStatus="status" >
 					<tr>
-						<td class="menu-order">
-							<button class="up">🔼</button> <br />
-							<button class="down">🔽</button>
-						</td>
+						<td class="menu-order">${result.menuNum}</td>
 						<td class="menu-img"><img src="data:image/jpeg;base64,${result.encodedString}" alt="" /></td>
 						<td class="menu-name">${result.menuName}</td>
 						<td class="menu-price">${result.menuPrice}</td>
@@ -36,12 +33,77 @@
 								rows="3">${result.menuInfo}</textarea>
 						</td>
 						<td class="menu-btn">
-							<button class="for-sail-btn">판매</button>
-							<button class="sold-out-btn">매진</button> <br />
-							<button class="modify-btn btn-open-popup">수정</button>
-							<button class="del-btn">삭제</button>
+							<c:if test="${result.menuOpen eq 'open' }">
+								<button type="button" class="sold-out-btn" style="background-color: var(--pink)"
+								onclick="location.href='<c:url value="/ceoMenu/menuSold?menuOpen=close&menuNum=${result.menuNum}" />'">매진처리</button>
+							</c:if>
+							<c:if test="${result.menuOpen eq 'close' }">
+								<button type="button" class="for-sale-btn" style="background-color: var(--prime-yellow)"
+								onclick="location.href='<c:url value="/ceoMenu/menuSold?menuOpen=open&menuNum=${result.menuNum}" />'">판매시작</button>
+							</c:if>
+							<button type="button" class="modify-btn btn-open-popup">수정</button>
+							<button type="button" class="del-btn" onclick="location.href='<c:url value="/ceoMenu/menuDelete?menuNum=${result.menuNum}" />'">삭제</button>
 						</td>
 					</tr>
+					
+					<!-- 모달창 -->
+					<div class="modal hidden" id="modalModi${status.index}">
+						<div class="modal_body">
+							<div class="panel">
+								<div class="panel-heading">메뉴 수정하기</div>
+					
+								<div class="panel-body">
+									<div class="add-menu">
+										<div class="menu-img">
+											이미지 미리보기
+											<br /> 
+											<img id="preview" />
+										</div>
+										<form class="add-form" action="<c:url value='/ceoMenu/menuModi'/>" method="POST" enctype="multipart/form-data">
+											<label for="img">이미지</label> 
+											<input name="menuImage" id="menuImage" type="file" accept="image/jpeg, image/jpg, image/png" onchange="readURL(this);" required /> 
+											<br/> 
+											
+											<label for="name">이름</label>
+											<input name="menuName" id="menuName" type="text" required value="${result.menuName}" /> 
+											<br/> 
+											
+											<label for="price">가격</label> 
+											<input name="menuPrice" id="menuPrice" type="number" min="1000" required value="${result.menuPrice}"/> 
+											<br/> 
+											
+											<label for="info">정보</label>
+											<br/>
+											<textarea name="menuInfo" id="menuInfo" cols="50" rows="4" required>${result.menuInfo}</textarea>
+											
+											<input type="hidden" name="menuNum" id="menuNum" value="${result.menuNum}">
+											
+											<div class="comment-btn">
+												<button class="modalClose">취소</button>
+												<button>확인</button>
+											</div>
+										</form> 
+									</div>
+								</div>
+							</div>
+						</div>
+					</div><!-- 모달종료 -->
+					
+					<script>
+				      // 모달 오픈 클래스
+				      const modal = document.getElementById("modalModi${status.index}");
+				      const btnOpenPopupRefund = document.querySelector(".btn-open-popup");
+				      const closeRefund = document.querySelector(".modalClose");
+				      
+				      btnOpenPopupRefund.addEventListener("click", function () {
+				        modal.classList.remove("hidden");
+				      });
+				      closeRefund.addEventListener("click", function () {
+				        modal.classList.add("hidden");
+				      });
+				      // modal 스크립트
+					</script>
+					
 				</c:forEach>
 			</table>
 		</div>
@@ -51,7 +113,7 @@
 			<form class="add-form" action="menuList/menuSubmit" method="POST" enctype="multipart/form-data">
 				
 				<label for="img">이미지</label> 
-				<input class="menu-image" name="menuImage" type="file" accept="image/jpeg, image/jpg, image/png" required /> 
+				<input class="menu-image" name="menuImage" id="menuImage" type="file" accept="image/jpeg, image/jpg, image/png" required /> 
 				<br /> 
 				
 				<label for="name">이름</label> 
@@ -78,44 +140,7 @@
 	</div>
 </div><!-- 여는 태그 aside에 포함 -->
 
-<!-- 모달창 -->
-<div class="modal hidden">
-	<div class="modal_body">
-		<div class="panel">
-			<div class="panel-heading">메뉴 수정하기</div>
 
-			<div class="panel-body">
-				<div class="add-menu">
-					<div class="menu-img">
-						이미지 미리보기
-						<br /> 
-						<img id="preview" />
-					</div>
-					<form class="add-form" action="">
-						<label for="img">이미지</label> 
-						<input name="img" type="file" accept="image/jpeg, image/jpg, image/png"
-							onchange="readURL(this);" required /> 
-						<br/> 
-						<label for="name">이름</label>
-						<input name="name" type="text" required /> 
-						<br/> 
-						<label for="price">가격</label> 
-						<input name="price" type="number"
-								min="1000" required /> 
-						<br/> 
-						<label for="info">정보</label>
-						<br/>
-						<textarea name="info" id="" cols="50" rows="4" required></textarea>
-					</form>
-				</div>
-			</div>
-		</div>
-		<div class="comment-btn">
-			<button class="close">취소</button>
-			<button>확인</button>
-		</div>
-	</div>
-</div>
 
 <%@ include file="../include/footer.jsp"%>
 <script>
@@ -137,16 +162,6 @@
       */
       //이미지 미리보기 end
 
-      // modal 스크립트
-      // 모달 오픈 클래스 class="btn-open-popup"
-      const modal = document.querySelector(".modal");
-      const btnOpenPopup = document.querySelector(".btn-open-popup");
+      
 
-      const close = document.querySelector(".close");
-      btnOpenPopup.addEventListener("click", function () {
-        modal.classList.remove("hidden");
-      });
-      close.addEventListener("click", function () {
-        modal.classList.add("hidden");
-      });
     </script>

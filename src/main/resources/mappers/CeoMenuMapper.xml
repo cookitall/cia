@@ -81,7 +81,7 @@
 		 -->
 		VALUES(
 		#{couponName}, #{couponDiscount},
-		#{couponRegDate}, #{couponEndDate}, '쿡잇올코퍼레이션',
+		#{couponRegDate}, #{couponEndDate}, #{shopName},
 		#{couponRemain}, #{couponTermPrice}, #{couponCode}
 		)
 	</insert>
@@ -96,13 +96,19 @@
 		coupon_term_price AS couponTermPrice,
 		coupon_code AS couponCode
 		FROM cia_coupons
+		WHERE shop_name = #{shopName}
 	</select>
 	
 	  <delete id="deleteLine">
-  	DELETE FROM cia_coupons
-  	WHERE coupon_code = #{couponCode}
-  </delete>
+	  	DELETE FROM cia_coupons
+	  	WHERE coupon_code = #{couponCode}
+	  </delete>
   
+  <update id="couponUp">
+  	UPDATE cia_coupons
+  	SET coupon_remain = #{couponRemain}
+  	WHERE coupon_code = #{couponCode}
+  </update>
 	
 	<!-- couponList끝 -->
 	
@@ -146,8 +152,25 @@
 	    	menu_num AS menuNum,
 	    	menu_Image AS menuImage
     	FROM cia_menu
+    	WHERE shop_name = #{shopName}
 	</select>
 	
+	
+	<update id="menuSold">
+		UPDATE cia_menu
+		SET menu_open = #{menuOpen}
+		WHERE menu_num = #{menuNumber}
+	</update>
+	<delete id="menuDelete">
+		DELETE cia_menu
+		WHERE menu_num = #{menuNumber}
+	</delete>
+	<update id="menuModi">
+		UPDATE cia_menu
+		SET menu_image = #{map.menuImage}, menu_name = #{map.menuName},
+			menu_price = #{map.menuPrice}, menu_info = #{map.menuInfo}
+		WHERE menu_num = #{menuNumber}
+	</update>
 	
 	<!-- menuList끝 -->
 	
