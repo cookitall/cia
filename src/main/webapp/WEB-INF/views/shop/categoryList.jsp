@@ -45,34 +45,27 @@
 
 
 
-<form action="#" name="pageForm" class="pageForm">
-	<div class="text-center clearfix">
-		<hr>
-		<ul class="pagination" id="pagination">
-			<!-- <c:if test="${pc.prev}"> -->
-			<li><a href="#" data-pageNum="${pc.beginPage-1}">이전</a></li>
-			<!--</c:if>-->
-
-			<!--<c:forEach var="num" begin="${pc.beginPage}" end="${pc.endPage}">-->
-			<li class="${pc.paging.pageNum == num ? 'active' : ''}"><a
-				href="#" data-pageNum="${num}">${num}</a></li>
-			<!--</c:forEach>-->
-
-			<!--<c:if test="${pc.next}">-->
-			<li><a href="#" data-pageNum="${pc.endPage+1}">다음</a></li>
-			<!--</c:if>-->
-		</ul>
-
-
-		<input type="hidden" name="pageNum" value="${pc.paging.pageNum}">
-		<input type="hidden" name="countPerPage"
-			value="${pc.paging.countPerPage}"> <input type="hidden"
-			name="keyword" value="${pc.paging.keyword}"> <input
-			type="hidden" name="condition" value="${pc.paging.condition}">
-
-
-	</div>
-</form>
+				<form action="<c:url value='/shop/categoryList' />" name="pageForm">
+	                        <div class="text-center clearfix">
+	                            <hr>
+	                            <ul class="pagination" id="pagination">
+	                            	<c:if test="${pc.prev}">
+	                                	<li><a href="#" data-pageNum="${pc.beginPage-1}">이전</a></li>
+	                                </c:if>
+	                                
+	                                <c:forEach var="num" begin="${pc.beginPage}" end="${pc.endPage}">
+	                                	<li class="${pc.paging.pageNum == num ? 'active' : 'nop'}"><a href="#" data-pageNum="${num}">${num}</a></li>
+	                                </c:forEach>
+	                                
+	                                <c:if test="${pc.next}">
+	                               		<li><a href="#" data-pageNum="${pc.endPage+1}">다음</a></li>
+	                                </c:if>
+	                            </ul>
+	                            
+	                            <input type="hidden" name="pageNum" value="${pc.paging.pageNum}">
+	                            <input type="hidden" name="countPerPage" value="${pc.paging.countPerPage}">
+	                        </div>
+                        </form>
 
 <%@ include file="../include/footer.jsp"%>
 
@@ -87,6 +80,17 @@
 		for(;$tag.className != 'category-store' ; $tag=$tag.parentElement);
 		console.log($tag + '클릭 이벤트 발생')
 	    location.href ="<c:url value='/shop/storeContent?shopName=' />" + $tag.id;
+	});
+	
+	$(function() {
+		$('#pagination').on('click', 'a', function(e) {
+			e.preventDefault();
+			console.log($(this));
+			const value = $(this).data('pagenum');
+			console.log(value);
+			document.pageForm.pageNum.value = value;
+			document.pageForm.submit();
+		});
 	});
 	
 </script>

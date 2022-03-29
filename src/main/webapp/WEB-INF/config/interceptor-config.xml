@@ -7,7 +7,7 @@
 		
 	<bean id="CeoLoginSuccessHandler" class="com.spring.cia.util.interceptor.CeoLoginSuccessHandler"/>	
 	<bean id="UserLoginSuccessHandler" class="com.spring.cia.util.interceptor.UserLoginSuccessHandler"/>	
-	
+	<bean id="UserAuthHandler" class="com.spring.cia.util.interceptor.UserAuthHandler" />
 	<mvc:interceptors>
 	
 		<mvc:interceptor>
@@ -17,6 +17,10 @@
 		<mvc:interceptor>
 			<mvc:mapping path="/userInfo/login" />
 			<ref bean="UserLoginSuccessHandler" />
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/shop/order" />
+			<ref bean="UserAuthHandler" />
 		</mvc:interceptor>
 		
 		

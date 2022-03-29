@@ -6,7 +6,6 @@
 <mapper namespace="com.spring.cia.shop.mapper.IShopMapper">
 
 	<resultMap type="com.spring.cia.command.ShopVO" id="ShopMap">
-		<!-- cia_shop -->
 		<id property="shopName" column="shop_name" />
 		<result property="shopCategory" column="shop_category" />
 		<result property="shopInfo" column="shop_info" />
@@ -29,6 +28,7 @@
 		<result property="reviewDate" column="review_date" />
 		<result property="reviewReply" column="review_reply" />
 		<collection property="replyVO" resultMap="ReplyMap"/>
+		<collection property="orderMenuList" resultMap="MenuList"/>
 	</resultMap>
 	
 	<resultMap type="com.spring.cia.command.ReplyVO" id="ReplyMap">
@@ -39,26 +39,37 @@
 		<result property="replyDate" column="reply_date" />
 	</resultMap>
 	
-	<resultMap type="com.spring.cia.command.MenuVO" id="MenuMap">
-		<result property="menuName" column="user_id" />
-		<result property="menuName" column="menu_name" />
-		<result property="menuName" column="menu_name" />
-		<result property="menuName" column="menu_name" />
-		<result property="menuName" column="menu_name" />
+	<resultMap type="com.spring.cia.command.OrderMenuVO" id="MenuList">
+		<result property="orderNum" column="order_num" />
+		<result property="menuNum" column="menu_num" />
+		<result property="amount" column="amount" />
+		<result property="price" column="price" />
+		<collection property="menu" resultMap="MenuMap"/>
 	</resultMap>
 	
-	<!-- <sql id="order">
-		<if test="condition == 'orderQuantity'">
-			WHERE title LIKE '%'||#{keyword}||'%'
-		</if>
-		<if test="condition == 'starPoint'">
-			WHERE content LIKE '%'||#{keyword}||'%'
-		</if>
-		<if test="condition == 'distance'">
-			WHERE writer LIKE '%'||#{keyword}||'%'
-		</if>
-	</sql> -->
+	<resultMap type="com.spring.cia.command.MenuVO" id="MenuMap">
+		<result property="menuName" column="menu_name" />
+		<result property="menuPrice" column="menu_price" />
+		<result property="menuInfo" column="menu_info" />
+		<result property="menuOpen" column="menu_open" />
+		<result property="shopName" column="shop_name" />
+		<result property="menuNum" column="menu_num" />
+		<!-- <result property="menuImage" column="menu_image" /> -->
+	</resultMap>
 	
+	<resultMap type="com.spring.cia.command.OrderVO" id="order">
+		<id property="orderNum" column="order_num"/>
+	</resultMap>
+	<resultMap type="com.spring.cia.command.UserInfoVO" id="userInfo">
+		<id property="userId" column="user_id" />
+		<result property="userEmail" column="user_email" />
+		<result property="userPw" column="user_pw" />
+		<result property="userName" column="user_name" />
+		<result property="userPhone" column="user_phone" />
+		<result property="userAddr1" column="user_Addr1" />
+		<result property="userAddr2" column="user_Addr2" />
+		<result property="userPoint" column="user_point" />
+	</resultMap>
 	<select id="getShopList" resultMap="ShopMap">
 		SELECT * FROM(
 			SELECT ROWNUM AS rn, tbl.* FROM(
@@ -90,6 +101,36 @@
 		]]>
 	</select>
 	
+	<select id="allshop" resultMap="ShopMap">
+		SELECT * FROM(
+			SELECT ROWNUM AS rn, tbl.* FROM(
+		        SELECT *
+		        FROM cia_shop cs
+		        LEFT OUTER JOIN (
+		            SELECT
+		                shop_name,
+		                COUNT(review_num) "review_count",
+		                AVG(review_star) "avg_star"
+		            FROM cia_review
+		            group by shop_name
+		        ) cr
+		        ON cs.shop_name = cr.shop_name
+		        LEFT OUTER JOIN (
+		            SELECT
+		                shop_name,
+		                COUNT(review_num) "reply_count"
+		            FROM cia_review_reply
+		            group by shop_name
+		        ) crr
+		        ON cs.shop_name = crr.shop_name
+		    ) tbl
+		)
+		<![CDATA[
+		WHERE rn > (#{pageNum} - 1) * #{countPerPage}
+		AND rn <= #{pageNum} * #{countPerPage}
+		]]>
+	</select>
+	
 	<select id="getTotal" resultType="int">
 		SELECT COUNT(*)
 		FROM cia_Shop
@@ -112,19 +153,84 @@
 	</select>
 	
 	<select id="getReviewReplyList" resultMap="ReviewMap">
-		SELECT *
+		SELECT
+			cr.user_id,
+		    cr.review_content,
+		    cr.review_star,
+		    cr.review_date,
+		    crr.reply_date,
+		    crr.reply_content,
+		    cm.menu_name
 		FROM cia_review cr
 		LEFT OUTER JOIN cia_review_reply crr
 		on cr.review_num = crr.review_num
+		LEFT OUTER JOIN cia_order_menu com
+		on cr.order_num = com.order_num
+		LEFT OUTER JOIN cia_menu cm
+		on com.menu_num = cm.menu_num
 		WHERE cr.shop_name = #{shopName}
 		ORDER BY review_date DESC
 	</select>
 	
-	<select id="getShopMenuList">
+	<select id="getMenuList" resultMap="MenuMap">
+		SELECT *
+		FROM cia_menu
+		WHERE shop_name = #{shopName}
 	</select>
 	
+	<select id="couponChk" resultType="int">
+		SELECT COUNT(*)
+		FROM cia_coupons
+		WHERE COUPON_CODE = #{couponCode}
+	</select>
 	
-
+	<select id="couponDiscount" resultType="int">
+		SELECT COUPON_DISCOUNT
+		FROM cia_coupons
+		WHERE COUPON_CODE = #{couponCode}
+	</select>
+	
+	<insert id="insertOrder">
+		INSERT INTO cia_order
+		VALUES(ORDERNUM_SEQ.nextval, sysdate, #{shopName}, #{userId}, #{payway})
+	</insert>
+	
+	<select id="orNumGet" resultType="int">
+		SELECT last_number FROM user_sequences WHERE sequence_name=upper('ORDERNUM_SEQ')
+	</select>
+	
+	<insert id="insertOrderDetail">
+		INSERT INTO cia_order_detail
+		VALUES(#{orderNum}, #{orderPrice}, #{orderMsg}, #{userName}, #{userAddr1}, #{userAddr2})
+	</insert>
+	
+	<insert id="insertOrderMenu">
+		INSERT INTO cia_order_menu
+		VALUES(#{orderNum}, #{menuNum}, 1,  #{price})
+	</insert>
+	
+	<insert id="insertPayment">
+		INSERT INTO cia_payment
+		VALUES(#{orderNum}, #{originalPrice}, #{couponDiscount}, #{orderPrice})
+	</insert>
+	
+	<insert id="insertDelivery">
+		INSERT INTO cia_delivery
+		(order_num, order_date, order_state, delivery_price)
+		VALUES(#{orderNum}, sysdate, 'new', #{deliveryPrice})
+	</insert>
+	
+	<update id="minusUserPoint">
+		UPDATE cia_user_info
+		SET user_point = #{point}
+		WHERE user_id = #{userId}
+	</update>
+	
+	<select id="user2" resultMap="userInfo">
+		SELECT *
+  		FROM cia_user_info
+  		WHERE user_id = #{userId}
+	</select>
 </mapper>
 
 

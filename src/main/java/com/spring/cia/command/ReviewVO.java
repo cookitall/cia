@@ -28,6 +28,8 @@ CREATE SEQUENCE review_seq
     NOCACHE;
 */
 import java.sql.Timestamp;
+import java.util.List;
+import java.util.Map;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -47,6 +49,6 @@ public class ReviewVO {
 	private int reviewStar;
 	private Timestamp reviewDate;
 	private int reviewReply;     //리플이 있으면 1, 리플이 없으면 0
-	
 	private ReplyVO replyVO;
+	private List<OrderMenuVO> orderMenuList;
 }

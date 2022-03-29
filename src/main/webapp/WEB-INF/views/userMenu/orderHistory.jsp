@@ -48,7 +48,7 @@
 
 		</section>
 		
-		 <form action="<c:url value='/userMenu/likeList' />" name="pageForm">
+		 <form action="<c:url value='/userMenu/orderHistory' />" name="pageForm">
 	                        <div class="text-center clearfix">
 	                            <hr>
 	                            <ul class="pagination" id="pagination">

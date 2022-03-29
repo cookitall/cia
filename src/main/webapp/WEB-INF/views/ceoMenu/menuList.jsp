@@ -34,15 +34,15 @@
 						</td>
 						<td class="menu-btn">
 							<c:if test="${result.menuOpen eq 'open' }">
-								<button type="button" class="sold-out-btn" style="background-color: var(--pink)"
+								<button type="button" class="btn sold-out-btn" style="background-color: var(--pink)"
 								onclick="location.href='<c:url value="/ceoMenu/menuSold?menuOpen=close&menuNum=${result.menuNum}" />'">매진처리</button>
 							</c:if>
 							<c:if test="${result.menuOpen eq 'close' }">
-								<button type="button" class="for-sale-btn" style="background-color: var(--prime-yellow)"
+								<button type="button" class="btn for-sale-btn" style="background-color: var(--prime-yellow)"
 								onclick="location.href='<c:url value="/ceoMenu/menuSold?menuOpen=open&menuNum=${result.menuNum}" />'">판매시작</button>
 							</c:if>
-							<button type="button" class="modify-btn btn-open-popup">수정</button>
-							<button type="button" class="del-btn" onclick="location.href='<c:url value="/ceoMenu/menuDelete?menuNum=${result.menuNum}" />'">삭제</button>
+							<button type="button" class="btn modify-btn" onclick="popup${status.index}()">수정</button>
+							<button type="button" class="btn del-btn" onclick="location.href='<c:url value="/ceoMenu/menuDelete?menuNum=${result.menuNum}" />'">삭제</button>
 						</td>
 					</tr>
 					
@@ -79,7 +79,7 @@
 											<input type="hidden" name="menuNum" id="menuNum" value="${result.menuNum}">
 											
 											<div class="comment-btn">
-												<button class="modalClose">취소</button>
+												<button class="modalClose${status.index}">취소</button>
 												<button>확인</button>
 											</div>
 										</form> 
@@ -88,23 +88,26 @@
 							</div>
 						</div>
 					</div><!-- 모달종료 -->
-					
+				
 					<script>
 				      // 모달 오픈 클래스
-				      const modal = document.getElementById("modalModi${status.index}");
-				      const btnOpenPopupRefund = document.querySelector(".btn-open-popup");
-				      const closeRefund = document.querySelector(".modalClose");
-				      
-				      btnOpenPopupRefund.addEventListener("click", function () {
-				        modal.classList.remove("hidden");
-				      });
-				      closeRefund.addEventListener("click", function () {
-				        modal.classList.add("hidden");
-				      });
-				      // modal 스크립트
+				    const modal${status.index} = document.getElementById("modalModi${status.index}");
+				  	const closeRefund${status.index} = document.querySelector(".modalClose${status.index}");
+				  	
+				  	function popup${status.index}() {
+				  		modal${status.index}.classList.remove("hidden");
+					}
+						
+					closeRefund${status.index}.addEventListener("click", function () {
+						modal${status.index}.classList.add("hidden");
+					});
+					// modal 스크립트
 					</script>
-					
+			
 				</c:forEach>
+				
+			      
+					
 			</table>
 		</div>
 		<!-- 메뉴 container end -->
@@ -143,11 +146,9 @@
 
 
 <%@ include file="../include/footer.jsp"%>
-<script>
-
-	
+<!-- 
+<script>	
       // 이미지 미리보기
-      /* 
       function readURL(input) {
         if (input.files && input.files[0]) {
           var reader = new FileReader();
@@ -159,9 +160,6 @@
           document.getElementById("preview").src = "";
         }
       }
-      */
-      //이미지 미리보기 end
-
-      
-
+      //이미지 미리보기 end      										
     </script>
+ -->

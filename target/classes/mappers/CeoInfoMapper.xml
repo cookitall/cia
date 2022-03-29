@@ -87,12 +87,11 @@
   	WHERE ceo_id = #{ceoId}
   </update>
   <update id="shopModify">
-  	UPDATE cia_shop
-  	SET shop_category = #{shopCategory},
-  		shop_num = #{shopNum}, shop_info = #{shopInfo},
-  		shop_addr1 = #{shopAddr1}, shop_addr2 = #{shopAddr2},
-  		delivery_price = {deliveryPrice}
-  	WHERE shop_name = #{shopName}
+	UPDATE cia_shop
+	SET shop_category = #{shopCategory}, shop_info = #{shopInfo}, 
+		shop_addr1 = #{shopAddr1}, shop_addr2 = #{shopAddr2},
+		delivery_price = #{deliveryPrice}
+	WHERE shop_name = #{shopName}
   </update>
   
   <delete id="ceoDelete">
