@@ -65,7 +65,7 @@
 	            <div class="pay-sub-title">할인방법 선택</div>
 	            <label for="discount">쿠폰</label>
 	            <div class="discount-wrap">
-	              <input type="text" name="couponCode" id="couponCode" placeholder="쿠폰 코드를 입력하세요"  required />
+	              <input type="text" name="couponCode" id="couponCode" placeholder="쿠폰 코드를 입력하세요"/>
 	              <button class="coupon-check" type="button">검색</button>
 	              <span id="couponError" class="error"></span>
 	            </div>
@@ -99,7 +99,7 @@
 	            </li>
 	            <li class="discount">
 	              <span  class="coupon">쿠폰할인</span>
-	              <input type="number" class="price" name="couponDiscount" id="couponDiscount" readonly="readonly">
+	              <input type="number" value="0" class="price" name="couponDiscount" id="couponDiscount" readonly="readonly">
 	            </li>
 	          </ul>
 	          <div class="total-price">
